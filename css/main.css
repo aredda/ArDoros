@@ -1,0 +1,178 @@
+:root
+{
+    --zero: #f0f6fa;
+
+    /* The shades of the first color */
+    --first: #1565c0;
+    --first-light: #5e92f3;
+    --first-dark: #003c8f;
+
+    /* The shades of the second color */
+    --second: #00c853;
+    --second-light: #5efc82;
+    --second-dark: #009624;
+}
+
+*
+{
+    text-align: right;
+    font-family: 'Almarai';
+}
+
+.text-first { color: var(--first) }
+
+.text-first-dark { color: var(--first-dark); }
+
+.text-second { color: var(--second) }
+
+.text-second-light { color: var(--second-light); }
+
+.text-second-dark { color: var(--second-dark); }
+
+.bg-zero { background: var(--zero) }
+
+.bg-grd-first { background: linear-gradient(#1c86ff, var(--first)) }
+
+.bg-grd-second { background: linear-gradient(#00eb61, var(--second)) }
+
+.search-panel,
+.list-view,
+.content-holder,
+.list-view-item,
+:not(.nav-item-body) > .nav-item
+{
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+:not(.nav-item-body) > .nav-item
+{
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.nav-item-body
+{
+    border: 1px solid silver;
+    border-radius: 0 0 4px 4px;
+    border-top-width: 0;
+}
+
+.nav-item-body > .nav-item
+{
+    display: block;
+    padding: 5px 25px;
+    font-weight: bold;
+    color: var(--second);
+    transition: background 0.5s, color 0.5s;
+}
+
+.nav-item-body > .nav-item:hover
+{
+    color: var(--second-dark);
+    background: var(--second-light);
+}
+
+.nav-item-header
+{
+    color: white;
+    padding: 5px 15px;
+    font-size: large;
+}
+
+.nav-item-header span
+{
+    float: left;
+    transform: scale(1.5);
+    transform-origin: left center;
+}
+
+.button
+{
+    border-width: 0;
+    color: white;
+}
+
+.search-panel
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.search-panel > .button
+{
+    flex-grow: 1;
+}
+
+.search-panel > input
+{
+    flex-grow: 5;
+    border: 1px solid var(--first);
+    border-left-width: 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.content-holder
+{
+    background: white;
+    border: 1px solid silver;
+}
+
+.list-view .list-view-item
+{
+    background: var(--zero);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.5s, box-shadow 0.5s;
+}
+
+.list-view .list-view-item:hover
+{
+    transform: scale(1.05);
+}
+
+.list-view .list-view-item img
+{
+    width: 100%;
+    height: auto;
+}
+
+.card-tags
+{
+    overflow: auto;
+}
+
+.card-tags span
+{
+    width: 50%;
+    float: left;
+    font-size: small;
+    font-weight: bold;
+}
+
+.document
+{
+    height: 500px;
+}
+
+.inverse-first
+{
+    transition: background 0.5s, color 0.5s;
+}
+
+.inverse-first:hover
+{
+    color: var(--first);
+    background: white;
+}
+
+.loader
+{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1.5%;
+    width: 100%;
+    background: linear-gradient(to right, var(--second-dark), var(--second-light));
+}
