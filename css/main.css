@@ -13,27 +13,57 @@
     --second-dark: #009624;
 }
 
+@font-face
+{
+    font-family: 'Almarai';
+    src: url(fonts/Almarai/Almarai-Regular.ttf); 
+}
+
 *
 {
     text-align: right;
     font-family: 'Almarai';
 }
 
-.text-first { color: var(--first) }
+.text-first 
+{ 
+    color: var(--first) 
+}
 
-.text-first-dark { color: var(--first-dark); }
+.text-first-dark 
+{ 
+    color: var(--first-dark); 
+}
 
-.text-second { color: var(--second) }
+.text-second
+{ 
+    color: var(--second) 
+}
 
-.text-second-light { color: var(--second-light); }
+.text-second-light 
+{ 
+    color: var(--second-light); 
+}
 
-.text-second-dark { color: var(--second-dark); }
+.text-second-dark 
+{ 
+    color: var(--second-dark); 
+}
 
-.bg-zero { background: var(--zero) }
+.bg-zero 
+{ 
+    background: var(--zero) 
+}
 
-.bg-grd-first { background: linear-gradient(#1c86ff, var(--first)) }
+.bg-grd-first 
+{ 
+    background: linear-gradient(#1c86ff, var(--first)) 
+}
 
-.bg-grd-second { background: linear-gradient(#00eb61, var(--second)) }
+.bg-grd-second 
+{ 
+    background: linear-gradient(#00eb61, var(--second)) 
+}
 
 .search-panel,
 .list-view,
