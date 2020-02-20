@@ -171,6 +171,8 @@ class SQLConverter
     {
         // Empty array
         $data = [];
+        // Adjust charset
+        $connection->query ("SET NAMES utf8");
         // Query result
         $result = $connection->query($query);
         // Add to the empty array

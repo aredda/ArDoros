@@ -28,7 +28,7 @@ class Template
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title><?php echo $this->title; ?></title>
-            <?php include "fragments/dependencies.php"; ?>
+            <?php include "views/fragments/dependencies.php"; ?>
         </head>
         <body class="bg-zero">
             <div class="container py-5">

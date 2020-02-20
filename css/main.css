@@ -185,7 +185,8 @@
     height: 500px;
 }
 
-.inverse-first
+.inverse-first,
+.inverse-second
 {
     transition: background 0.5s, color 0.5s;
 }
@@ -193,6 +194,12 @@
 .inverse-first:hover
 {
     color: var(--first);
+    background: white;
+}
+
+.inverse-second:hover
+{
+    color: var(--second);
     background: white;
 }
 

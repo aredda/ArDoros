@@ -17,3 +17,10 @@ load ("$ROOT_DIR/src/orm/collection");
 load ("$ROOT_DIR/src/orm");
 load ("$ROOT_DIR/src/models/abstract");
 load ("$ROOT_DIR/src/models");
+
+// Data Container
+$host = "localhost";
+$user = "areda";
+$pass = "123";
+
+$GLOBALS["db"] = new DbArdoros (new mysqli ($host, $user, $pass));

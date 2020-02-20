@@ -4,7 +4,7 @@ class Grade
     extends Model
 {
     /**
-     * @hasMany=Subject
+     * @hasMany=Lesson
      */
-    public $subjects;
+    public $lessons;
 }

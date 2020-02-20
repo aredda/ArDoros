@@ -20,8 +20,8 @@ class DbArdoros
         // If the database is not created, create it
         if (!$this->is_created ())
             $this->create ();
-        // If it is indeed created, load data
         else
+            // If it is indeed created, load data
             $this->refresh ();
     }
 }

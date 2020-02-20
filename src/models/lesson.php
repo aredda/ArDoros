@@ -13,6 +13,11 @@ class Lesson
     public $semester;
     /**
      * @type=INT
+     * @references=Grade
+     */
+    public $grade;
+    /**
+     * @type=INT
      * @references=Subject
      */
     public $subject;
