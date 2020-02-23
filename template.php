@@ -81,6 +81,16 @@ class Template
             </div>
             <!-- Loading purposes -->
             <div class="loader shadow-sm"></div>
+            <!-- Notification purposes -->
+            <div class="notification">
+                <div class="notification-header bg-grd-first">This is the header</div>
+                <div class="notification-body bg-zero">This is the body</div>
+                <div class="notification-footer bg-light">
+                    <button class="btn btn-sm btn-danger btn-close">اغلاق</button>
+                </div>
+            </div>
+            <!-- Overlay -->
+            <div class="overlay"></div>
         </body>
         </html>
         <?php

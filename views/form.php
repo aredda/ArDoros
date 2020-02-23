@@ -1,18 +1,12 @@
 <?php
 
-function convertSQLType ($sqlType)
-{
-    if (strpos($sqlType, "INT") !== false)
-        return "number";
-
-    if (strpos($sqlType, "TEXT") !== false)
-        return "textarea";
-
-    return "text";
-}
-
 $model = $_GET ["model"];
 $mode = $_GET["mode"];
+
+// Concerning UPDATE mode
+$container = $GLOBALS['db'][$model] ?? null;
+$id = $_GET['id'] ?? null;
+$target = $container->find ($id) ?? null;
 
 $foreignKeys = SQLConverter::get_foreign_keys ($model);
 $containers = SQLConverter::get_children_containers ($model);
@@ -31,7 +25,6 @@ $submitId = $mode == "insert" ? "btn-insert" : "btn-update";
         <form id="form" method='post' enctype="multipart/form-data">
         <table class="w-100">
 <?php
-
 foreach ($reflector->getProperties () as $prop)
 {
     $type = SQLConverter::get_constraint ($prop, "@type");
@@ -59,9 +52,9 @@ foreach ($reflector->getProperties () as $prop)
     switch ($type)
     {
         case "MULTI":
-            echo "<select name='{$prop->getName()}' class='form-control mb-2 text-center'>";
-            foreach ($GLOBALS["db"][$reference] as $record)
-                echo "<option value='$record->id'>$record->title</option>";
+            echo "<select name={$prop->getName()} class='form-control mb-2 text-center'>";
+            foreach ($GLOBALS['db'][$reference] as $record)
+                echo "<option " . ($record->id == $prop->getValue ($target)->id ? "selected" : "") . " value='$record->id'>$record->title</option>";
             echo "</select>";
         break;
 
@@ -77,14 +70,15 @@ foreach ($reflector->getProperties () as $prop)
         break;
 
         default:
-            echo "<input type='" . convertSQLType($type) . "' name='{$prop->getName()}' class='form-control text-left mb-2' />";
+            $value = $target == null ? "" : $prop->getValue ($target);
+
+            echo "<input type=".Translator::convertSQLType ($type)." name='{$prop->getName()}' value='$value' class='form-control text-left mb-2' />";
         break;
     }
     echo "</td>";
     echo "<td class='text-primary font-weight-bold'>$label</td>";
     echo "</tr>";
 }
-
 ?>
             <tr>
                 <td colspan="2">

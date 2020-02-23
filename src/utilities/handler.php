@@ -23,7 +23,13 @@ abstract class RequestHandler
         return $instance;
     }
 
-    public static function handle (array $params)
+    /**
+     * @param array $params
+     * $_POST/$_GET array
+     * @param array $files
+     * $_FILES array
+     */
+    public static function handle (array $params, array $files = null)
     {
         if (!isset($params["type"]))
             throw new Exception ("A Request Type is expected!");
@@ -47,7 +53,7 @@ abstract class RequestHandler
             case Request::INSERT:
 
                 // Adding the instance to the container
-                $container->add (RequestHandler::fillInstance ($reflector->newInstance(), $reflector, $params));
+                $container->add (RequestHandler::fillInstance (RequestHandler::fillInstance ($reflector->newInstance(), $reflector, Uploader::upload ($files, $params)), $reflector, $params));
 
             break;
 
@@ -58,7 +64,7 @@ abstract class RequestHandler
                 // Remove the 'id' param from 'params' array
                 unset ($params['id']);
                 // Update the instance
-                $container->update (RequestHandler::fillInstance($instance, $reflector, $params));
+                $container->update (RequestHandler::fillInstance (RequestHandler::fillInstance ($instance, $reflector, Uploader::upload ($files, $params)), $reflector, $params));
 
             break;
         

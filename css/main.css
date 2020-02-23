@@ -25,6 +25,16 @@
     font-family: 'Almarai';
 }
 
+a
+{
+    text-decoration: none !important;
+}
+
+.container
+{
+    position: relative;
+}
+
 .text-first 
 { 
     color: var(--first) 
@@ -69,7 +79,8 @@
 .list-view,
 .content-holder,
 .list-view-item,
-:not(.nav-item-body) > .nav-item
+:not(.nav-item-body) > .nav-item,
+.notification
 {
     overflow: hidden;
     border-radius: 4px;
@@ -203,13 +214,65 @@
     background: white;
 }
 
+.notification, 
 .loader
 {
-    display: none;
     position: absolute;
+    display: none;
+}
+
+.loader
+{
     top: 0;
     left: 0;
     height: 1.5%;
     width: 100%;
     background: linear-gradient(to right, var(--second-dark), var(--second-light));
+}
+
+.notification
+{
+    z-index: 101;
+    top: 50%;
+    left: 37.5%;
+    margin-bottom: 50px;
+    box-shadow: 0 3px 10px black;
+    width: 25%;
+}
+
+.notification > *
+{
+    padding: 10px 15px;
+}
+
+.notification-header
+{
+    color: white;
+    font-weight: bold;
+    font-size: large;
+}
+
+.notification-body
+{
+    background: white;
+    border-bottom: 1px solid silver;
+}
+
+.notification-footer
+{
+    padding: 5px !important;
+    text-align: left;
+}
+
+.overlay
+{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0.75;
 }

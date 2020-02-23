@@ -79,6 +79,15 @@ $(document).ready(function () {
     });
 
     /**
+     * The overlay fading in 
+     */
+    $(".btn-close, .overlay").on('click', function (){
+        // Hide some elements
+        $(".overlay").fadeOut (500);
+        $(".notification").fadeOut (500);
+    });
+
+    /**
      * Insert/Update button event
      */
     $("#btn-insert, #btn-update").on ('click', function () {
@@ -95,7 +104,33 @@ $(document).ready(function () {
             data.append (key, getUrlParams()[key]);
         // Send an INSERT request
         ajaxRequest ('src/medium.php', data, function (response) {
-            
+            // Confirmation pop-up
+            /** Do it here */
+        });
+    });
+
+    /**
+     * Delete button event
+     */
+    $(".btn-delete").on ('click', function (){
+        // Retrieve the parent row
+        var parent = $(this).closest ('tr');
+        // Retrieve data id
+        var id = parent.attr ('data-id');
+        // Construct a form data object
+        var data = new FormData ();
+        // Provide the required data to send
+        data.append ('id', id);
+        data.append ('type', 'delete');
+        for (var key in getUrlParams ())
+            data.append (key, getUrlParams()[key]);
+        // Send a DELETE request
+        ajaxRequest ('src/medium.php', data, function (response) {
+            // Remove from view
+            if (response.hasOwnProperty ('success'))
+                parent.remove ();
+            // Confirmation pop-up
+            /** Do it here */
         });
     });
 

@@ -1,0 +1,8 @@
+> template.php
+    - finishing navigation panel 
+> unit.php
+    - filtering functionality
+> authentication functionality
+    - signin.php    
+> optimization
+    - polishing the design

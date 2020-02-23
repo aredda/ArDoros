@@ -270,7 +270,7 @@ class SQLConverter
             if (array_key_exists("@primary", $annotations))
                 $pkName = $columnName;
 
-            if (array_key_exists("@hasMany", $annotations) || array_key_exists("@primary", $annotations))
+            if (array_key_exists("@hasMany", $annotations) || array_key_exists("@auto", $annotations))
                 continue;
 
             $value = $property->getValue($instance);
@@ -278,8 +278,9 @@ class SQLConverter
             if (array_key_exists("@references", $annotations))
             {
                 $pk = SQLConverter::get_primary_property($annotations["@references"]);
-
-                $value = $pk->getValue ($value);
+                
+                if (is_object($value))
+                    $value = $pk->getValue ($value);
             }
 
             array_push ($pairs, $columnName . "='$value'");
