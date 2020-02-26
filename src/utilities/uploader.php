@@ -8,7 +8,8 @@ abstract class Uploader
      */
     public static $mimeTypes = [
         'image' => [
-            'image/jpeg'
+            'image/jpeg',
+            'image/jpg'
         ],
         'path' => [
             'application/pdf'
@@ -30,22 +31,26 @@ abstract class Uploader
             if (!array_key_exists ($name, Uploader::$mimeTypes))
                 throw new Exception ("Can't upload the file, unknown target.");
             
+            // Check if there's actually a file
+            if ($details['size'] == 0)
+                continue;
+
             // Check if the type is allowed
             if (!in_array($details['type'], Uploader::$mimeTypes[$name]))
                 throw new Exception ("Wrong file type given to $name!");
 
             // Construct and set up the new destination
-            $modelDirectory = Loader::getAppDir() . "/media/" . strtolower ($meta['model']);
+            $modelDirectory = "media/" . strtolower ($meta['model']);
 
             // If the directory is not created
-            if (!file_exists($modelDirectory))
-                mkdir ($modelDirectory);
+            if (!file_exists(Loader::getAppDir() . "/$modelDirectory"))
+                mkdir (Loader::getAppDir() . "/$modelDirectory");
 
             // Construct the whole file path
             $destination = "$modelDirectory/" . time () . "." . pathinfo($details['name'], PATHINFO_EXTENSION);
 
             // Upload it to that destination
-            move_uploaded_file($details['tmp_name'], $destination);
+            move_uploaded_file($details['tmp_name'], Loader::getAppDir () . "/" . $destination);
 
             // Adding it to the array
             $uploaded[$name] = $destination;
@@ -53,4 +58,5 @@ abstract class Uploader
 
         return $uploaded;
     }
+    
 }

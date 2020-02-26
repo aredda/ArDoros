@@ -82,8 +82,9 @@ class SQLConverter
         return $keys;
     }
 
-    // Get all containers of a record's children
-    // Returns all properties that have 'hasMany' annotation
+    /**
+     * Returns all properties that have 'hasMany' annotation
+     *  */ 
     public static function get_children_containers(string $class)
     {
         $reflecter = new ReflectionClass($class);
@@ -158,8 +159,12 @@ class SQLConverter
         return null;
     }
 
-    // Get the value of the constraint
-    public static function get_constraint(ReflectionProperty $property, $constraint)
+    /**
+     * @param string $constraint
+     * The annotation you search for, returns null if no such annotation is found
+     * @return ReflectionProperty
+     * */ 
+    public static function get_constraint(ReflectionProperty $property, string $constraint)
     {
         $constraints = SQLConverter::get_constraints($property);
 

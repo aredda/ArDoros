@@ -1,9 +1,8 @@
 <?php
 
 include "template.php";
-include "src/utilities/loader.php";
-include "src/utilities/translator.php";
 
 $_GET["mode"] = "insert";
+$_GET['model'] = ucfirst ($_GET['model']);
 
 Template::useTemplate("اضافة", "views/form.php");

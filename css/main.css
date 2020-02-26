@@ -11,6 +11,10 @@
     --second: #00c853;
     --second-light: #5efc82;
     --second-dark: #009624;
+
+    /* The shades of the error color */
+    --error: #d32f2f;
+    --error-light: #ff6659;
 }
 
 @font-face
@@ -73,6 +77,11 @@ a
 .bg-grd-second 
 { 
     background: linear-gradient(#00eb61, var(--second)) 
+}
+
+.bg-grd-error
+{
+    background: linear-gradient(var(--error-light), var(--error))
 }
 
 .search-panel,
@@ -204,7 +213,7 @@ a
 
 .inverse-first:hover
 {
-    color: var(--first);
+    color: var(--first) !important;
     background: white;
 }
 
@@ -235,9 +244,9 @@ a
     z-index: 101;
     top: 50%;
     left: 37.5%;
-    margin-bottom: 50px;
     box-shadow: 0 3px 10px black;
     width: 25%;
+    transform: translateY(-50%);
 }
 
 .notification > *
@@ -275,4 +284,9 @@ a
     height: 100%;
     background: black;
     opacity: 0.75;
+}
+
+.centralized
+{
+    transform: translateY(25%);
 }

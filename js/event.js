@@ -1,16 +1,16 @@
 /**
  * IMPORTANT: 
- * Requires JQuery
+ * - Requires JQuery
+ * - Requires component.js
  */
-
 
 /**
 * A method to retrieve form's data
 */
-function serialize(formCLass) 
+function serialize(formClass) 
 {
     // return a FormData Object
-    return new FormData ($(formCLass) [0]);
+    return new FormData ($(formClass) [0]);
 }
 
 /**
@@ -105,7 +105,11 @@ $(document).ready(function () {
         // Send an INSERT request
         ajaxRequest ('src/medium.php', data, function (response) {
             // Confirmation pop-up
-            /** Do it here */
+            var header = response.hasOwnProperty ('success') ? 'نجاح' : 'فشل';
+            var type = response.hasOwnProperty ('success') ? 'success' : 'fail';
+            var message = response.hasOwnProperty ('success') ? 'تمت العملية بنجاح' : response.error;
+
+            popNotification(header, message, type);
         });
     });
 
@@ -129,8 +133,52 @@ $(document).ready(function () {
             // Remove from view
             if (response.hasOwnProperty ('success'))
                 parent.remove ();
-            // Confirmation pop-up
-            /** Do it here */
+        });
+    });
+
+    /**
+     * Search button event
+     */
+    $(".btn-search").on ('click', function (){
+        // Criteria to send
+        var keys = ['model', 'title', 'grade', 'subject', 'semester'];
+        // Create an empty form data
+        var data = new FormData ();
+        // Specify the type of the request
+        data.append ('type', 'search');
+        // Gather the values of those keys
+        for (var key of keys)
+            data.append (key, $("*[name=" + key + "]").val ());
+        // Send a SEARCH request
+        ajaxRequest ('src/medium.php', data, function (response) {
+            // Extract data
+            var dataArr = response.success.array;
+            
+            console.table (dataArr);
+            // Retrieve container
+            var container = $(".list-view");
+            // Retrieve result counter
+            var counter = $(".result-counter");
+            // Remove all items
+            dominoEffect ($(".list-view-item-container"), 400, 'out', 0, function (){
+                // Update result counter
+                counter.html (dataArr.length);
+                // Display data
+                for (var item of dataArr)
+                {
+                    // Destructuring
+                    var {id, image, title, semester } = item;
+                    // instantiate an item view 
+                    var itemView = createListViewItem(`model=${data.get('model')}&id=${id}`, image, title, item.grade.title, item.subject.title, response.success.class, semester);
+                    // hide it
+                    itemView.css ({'display': 'none'});
+                    // append it
+                    container.append (itemView);
+                }
+                dominoEffect ($(".list-view-item-container"), 400, 'in', 0);
+            });
+        }, 'post', 'json', function (a, b, c){
+            popNotification ('error', c, 'error');
         });
     });
 

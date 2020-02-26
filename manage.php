@@ -1,7 +1,7 @@
 <?php
 
 include "template.php";
-include "src/utilities/loader.php";
-include "src/utilities/translator.php";
+
+$_GET['model'] = ucfirst ($_GET['model']);
 
 Template::useTemplate('لوحة التحكم', "views/list.php");
