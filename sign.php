@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-6 offset-md-3 content-holder p-5 shadow-lg">
                 <h1 class='text-center text-primary mb-4'><a href='index.php'>أردروس</a></h1>
-                <form>
+                <form method='post'>
                     <div class="form-group">
                         <label class='font-weight-bold text-second'>اسم الأدمين</label>
                         <input placeholder='اسم الأدمين' type="text" class="form-control"/>
