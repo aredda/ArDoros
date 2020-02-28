@@ -21,7 +21,7 @@ $submitId = $mode == "insert" ? "btn-insert" : "btn-update";
 <div class="row px-3">
     <!-- Main Information -->
     <div class="col-md-12 content-holder p-4">
-        <h2 class='m-0 mb-4 text-center text-primary'><?php echo Translator::translate($mode) . " " . Translator::translate($model); ?></h2>
+        <h2 class='m-0 mb-4 text-center text-second'><?php echo Translator::translate($mode) . " " . Translator::translate($model); ?></h2>
         <form id="form" method='post' enctype="multipart/form-data">
         <table class="w-100">
 <?php
@@ -52,7 +52,7 @@ foreach ($reflector->getProperties () as $prop)
     switch ($type)
     {
         case "MULTI":
-            echo "<select name={$prop->getName()} class='form-control mb-2 text-center'>";
+            echo "<select required name={$prop->getName()} class='form-control mb-2 text-center'>";
             foreach ($GLOBALS['db'][$reference] as $record)
                 echo "<option " . ($record->id == $prop->getValue ($target)->id ? "selected" : "") . " value='$record->id'>$record->title</option>";
             echo "</select>";
@@ -62,7 +62,7 @@ foreach ($reflector->getProperties () as $prop)
             ?>
             <div class="input-group mb-2">
                 <div class="custom-file">
-                    <input type="file" name='<?php echo $prop->getName(); ?>' class="custom-file-input">
+                    <input required type="file" name='<?php echo $prop->getName(); ?>' class="custom-file-input">
                     <label class="custom-file-label text-left">اختر الملف</label>
                 </div>
             </div>
@@ -72,7 +72,7 @@ foreach ($reflector->getProperties () as $prop)
         default:
             $value = $target == null ? "" : $prop->getValue ($target);
 
-            echo "<input type=".Translator::convertSQLType ($type)." name='{$prop->getName()}' value='$value' class='form-control text-left mb-2' />";
+            echo "<input required type=".Translator::convertSQLType ($type)." name='{$prop->getName()}' value='$value' class='form-control text-left mb-2' />";
         break;
     }
     echo "</td>";

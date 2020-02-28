@@ -32,10 +32,10 @@ abstract class RequestHandler
     public static function handle (array $params, array $files = null)
     {
         if (!isset($params["type"]))
-            throw new Exception ("A Request Type is expected!");
+            throw new Exception ("A request Type is expected!");
 
         if (!isset($params["model"]))
-            throw new Exception ("A Model is needed to be handled!");
+            throw new Exception ("A model is needed to be handled!");
 
         $request = $params["type"];
 
@@ -43,8 +43,6 @@ abstract class RequestHandler
         $model = ucfirst ($params["model"]);
         // The reflection helper of the model
         $reflector = new ReflectionClass ($model);
-        // The primary key for that model
-        $pk = SQLConverter::get_primary_property ($model);
         // The table of the model
         $container = $GLOBALS["db"][$model];
 
@@ -76,11 +74,35 @@ abstract class RequestHandler
             break;
 
             case Request::SEARCH:
-            /**
-             * INPUT: 
-             * - model's name
-             * - criteria
-             */
+
+                // Filtering operation
+                $units = count ($params) == 0 ? $container : $container->where (function ($u, $c) {
+                    $result = true;
+                    $reflector = new ReflectionClass (get_class ($u));
+                    
+                    foreach ($c as $key => $value)
+                    {
+                        if (is_string ($value) && empty ($value))
+                                continue;
+                        
+                        if ($reflector->hasProperty ($key))
+                        {
+                            $p = $reflector->getProperty($key);
+                            $v = $p->getValue ($u);
+
+                            if (strpos($key, 'title') !== false)
+                                $result &= (strpos ($v, $value) !== false);
+                            else
+                                $result &= !is_object ($v) ? $v == $value : $v->id == $value;
+                        }
+                    }
+
+                    return $result;
+                }, $params);
+
+                // Returns the result of the filtering
+                return $units;
+
             break;
         }
 

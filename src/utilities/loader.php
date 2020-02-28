@@ -3,8 +3,8 @@
 abstract class Loader 
 {
 	public const HOST = "localhost";
-	public const USER = "root";
-	public const PASS = "";
+	public const USER = "areda";
+	public const PASS = "123";
 
 	public const APP_NAME = "ArDorossV2";
 
@@ -43,7 +43,7 @@ abstract class Loader
 				if (strpos ($item, ".php"))
 					include_once "$fullDirectoryPath/$item";
 		}
-	}
+	} 
 
 	public static function getDatabase ()
 	{

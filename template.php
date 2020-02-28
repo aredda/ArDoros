@@ -21,6 +21,8 @@ class Template
 
     private function render ()
     {
+        include_once "src/utilities/loader.php";
+        include_once "src/utilities/translator.php";
         ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -36,12 +38,12 @@ class Template
                 <div class="row mb-4">
                     <div class="col-md-9">
                         <div class="search-panel">
-                            <button class="button bg-grd-first m-0 p-3">ابحث</button>
+                            <button class="button btn-search bg-grd-first m-0 p-3">ابحث</button>
                             <input class="m-0 p-3" name="title" placeholder="عنوان الدرس..." />
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <h1 class="text-primary font-weight-bold">أردروس</h1>
+                        <a href="index.php"><h1 class="text-primary font-weight-bold">أردروس</h1></a>
                     </div>
                 </div>
                 <!-- Body -->
@@ -53,29 +55,7 @@ class Template
                     </div>
                     <!-- Navigation Bar -->
                     <div class="col-md-3">
-                        <div class="nav-item">
-                            <div class="nav-item-header bg-grd-second">
-                                <a>مستوى</a>
-                                <span>&rtrif;</span>
-                            </div>
-                            <div class="nav-item-body bg-white">
-                                <a href="#" class="nav-item">مادة</a>
-                                <a href="#" class="nav-item">مادة</a>
-                                <a href="#" class="nav-item">مادة</a>
-                            </div>
-                        </div>
-                        <div class="nav-item">
-                            <div class="nav-item-header bg-grd-second">
-                                <a>مستوى</a>
-                                <span>&rtrif;</span>
-                            </div>
-                        </div>
-                        <div class="nav-item">
-                            <div class="nav-item-header bg-grd-second">
-                                <a>مستوى</a>
-                                <span>&rtrif;</span>
-                            </div>
-                        </div>
+                        <?php include "views/fragments/navbar.php"; ?>
                     </div>
                 </div>
             </div>
@@ -83,7 +63,7 @@ class Template
             <div class="loader shadow-sm"></div>
             <!-- Notification purposes -->
             <div class="notification">
-                <div class="notification-header bg-grd-first">This is the header</div>
+                <div class="notification-header">This is the header</div>
                 <div class="notification-body bg-zero">This is the body</div>
                 <div class="notification-footer bg-light">
                     <button class="btn btn-sm btn-danger btn-close">اغلاق</button>
