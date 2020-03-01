@@ -8,9 +8,7 @@ $lessons = $data[Lesson::class];
 foreach ($grades as $grade)
 {
     // Get the lessons of this grade
-    $gradeLessons = $lessons->where (function ($l, $g) {
-        return $l->grade->id == $g->id;
-    }, $grade);
+    $gradeLessons = $grade->lessons;
     // Get the subjects of this grade in which there are lessons
     $gradeSubjects = new Table (Subject::class);
     foreach ($gradeLessons as $lesson)

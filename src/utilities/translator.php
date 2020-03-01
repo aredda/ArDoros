@@ -3,31 +3,46 @@
 abstract class Translator
 {
     private static $synonyms = [
-        "id" => "الرقم",
-        "grade" => "المستوى",
-        "subject" => "المادة",
-        "lesson" => "الدرس",
-        "exercise" => "التمرين",
-        "exam" => "الامتحان",
-        "title" => "العنوان",
-        "path" => "مسار الملف",
-        "semester" => "الدورة",
-        "image" => "الصورة",
-        "year" => "السنة",
-        "type" => "النوع",
-        "model" => "النوع",
+        "id" => "رقم",
+        "grade" => "مستوى",
+        "subject" => "مادة",
+        "lesson" => "درس",
+        "exercise" => "تمرين",
+        "exam" => "امتحان",
+        "title" => "عنوان",
+        "path" => "ملف",
+        "semester" => "دورة",
+        "image" => "صورة",
+        "year" => "سنة",
+        "type" => "نوع",
+        "model" => "نوع",
         "insert" => "اضافة",
         "delete" => "حذف",
         "update" => "تعديل",
-        "download" => "تحميل"
+        "download" => "تحميل",
+        'exercisecorrection' => 'تصحيح تمرين',
+        'examcorrection' => 'تصحيح امتحان'
     ];
 
-    public static function translate ($word)
+    private static $plurals = [
+        'grade' => 'مستويات',
+        'subject' => 'مواد',
+        'lesson' => 'دروس',
+        'exercise' => 'تمارين',
+        'exam' => 'امتحانات',
+        'exercisecorrection' => 'تصحيحات التمارين',
+        'examcorrection' => 'تصحيحات الامتحانات'
+    ];
+
+    public static function translate ($word, $toPlural = false)
     {
         $word = strtolower ($word);
 
-        if (array_key_exists($word, self::$synonyms))
+        if (!$toPlural && array_key_exists($word, self::$synonyms))
             return self::$synonyms[$word];
+        
+        if ($toPlural && array_key_exists($word, self::$plurals))
+            return self::$plurals[$word];
 
         return $word;
     }

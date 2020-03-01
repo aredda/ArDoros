@@ -10,10 +10,11 @@
     <!-- Main Information -->
     <div class="col-md-12 content-holder p-4">
         <h2 class='m-0 mb-4 text-right text-primary'>
-            <a href="insert.php?model=<?php echo $model; ?>" class='btn btn-lg bg-grd-second text-white float-left px-4 shadow-sm'>اضافة</a>جدول المعلومات
+            <a href="insert.php?model=<?php echo $model; ?>" class='btn btn-lg bg-grd-second text-white float-left px-4 shadow-sm'>اضافة <?php echo Translator::translate ($model);?></a>
+            <a><?php echo "جدول <b>ال" . Translator::translate($model, true) . "</b>"; ?></a>
         </h2>
         <table class='table table-striped border m-0 w-100'>
-            <thead class='bg-grd-second text-white'>
+            <thead class='bg-light'>
                 <?php 
 
                 echo "<th></th>";
@@ -32,7 +33,7 @@
                 {
                     echo "<tr data-id='$record->id'>";
                     echo "<td><input class='btn-delete btn btn-sm btn-block btn-danger' type='button' value='". Translator::translate("delete") ."'/></td>";
-                    echo "<td><a href='update.php?model=$model&id=$record->id'><input type='button' class='btn btn-sm btn-block btn-primary' value='" . Translator::translate("update") . "' /></a></td>";
+                    echo "<td><a href='update.php?model=$model&id=$record->id'><input type='button' class='btn btn-sm btn-block btn-dark' value='" . Translator::translate("update") . "' /></a></td>";
                     foreach ($reflector->getProperties () as $prop)
                         if (!in_array ($prop, $containers))
                         {
@@ -41,7 +42,7 @@
                             if (is_object($value))
                                 $value = $value->title;
 
-                            echo "<td>". (in_array($prop->getName(), $downloadable) ? "<a class='text-second' download href='$value'>" . Translator::translate("download") . "</a>" : $value) . "</td>";
+                            echo "<td>". (in_array($prop->getName(), $downloadable) ? "<a class='text-primary' download href='$value'>" . Translator::translate("download") . "</a>" : $value) . "</td>";
                         }
                     echo "</tr>";
                 }

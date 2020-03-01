@@ -9,9 +9,8 @@ class Authenticator
      * if given information is valid, 'true' will be returned 
      */
     public static function authenticate ($name, $pass)
-        : bool
     {
-        if (strcmp ($name, '') == 0 && strcmp ($pass, ''))
+        if (strcmp ($name, self::ADMIN_NAME) == 0 && strcmp ($pass, self::ADMIN_PASS) == 0)
         {
             session_start ();
 
@@ -30,7 +29,6 @@ class Authenticator
      * checks if there's a session or not
      */
     public static function isAuthenticated ()
-        : bool
     {
         session_start ();
 

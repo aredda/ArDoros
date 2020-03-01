@@ -1,5 +1,5 @@
 # Back-end Section
-> template.php
+> templates/template.php
     - [finished] finishing navigation panel
 > catalog.php
     - [finished] filtering functionality
@@ -7,13 +7,14 @@
     - pagination
     - can't parse recursive data error
 > authentication functionality
-    - sign.php    
+    - [finished] sign.php    
 > unit.php
 > document optimization
+> adding ads
 
 # Front-end Section
 > [finished] sign in page
-> management menu
+> [finished] management menu
 > optimization
     - polishing the design
     - making it responsive

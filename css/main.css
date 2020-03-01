@@ -130,6 +130,11 @@ a
     font-size: large;
 }
 
+.nav-item-header img
+{
+    width: 24px;
+}
+
 .nav-item-header span
 {
     float: left;
@@ -219,7 +224,7 @@ a
 
 .inverse-second:hover
 {
-    color: var(--second);
+    color: var(--second) !important;
     background: white;
 }
 
@@ -289,4 +294,20 @@ a
 .centralized
 {
     transform: translateY(25%);
+}
+
+.hover-shadow
+{
+    transition: box-shadow 0.5s;
+}
+
+.hover-shadow:hover
+{
+    box-shadow: 0 0 5px var(--dark);
+}
+
+.half-scaled
+{
+    transform-origin: center left;
+    transform: scale(0.6);
 }

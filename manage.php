@@ -1,7 +1,7 @@
 <?php
 
-include "template.php";
+include "templates/adminTemplate.php";
 
 $_GET['model'] = ucfirst ($_GET['model']);
 
-Template::useTemplate('لوحة التحكم', "views/list.php");
+AdminTemplate::useTemplate('لوحة التحكم', "views/list.php");

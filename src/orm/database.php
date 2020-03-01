@@ -3,7 +3,7 @@
 abstract class Database implements ArrayAccess
 {
     public $connection;
-    protected $tables;
+    public $tables;
 
     public function __construct($connection)
     {

@@ -76,13 +76,13 @@ foreach ($reflector->getProperties () as $prop)
         break;
     }
     echo "</td>";
-    echo "<td class='text-primary font-weight-bold'>$label</td>";
+    echo "<td class='text-dark font-weight-bold'>ال$label</td>";
     echo "</tr>";
 }
 ?>
             <tr>
                 <td colspan="2">
-                    <input id="<?php echo $submitId; ?>" type="button" value="<?php echo Translator::translate($_GET['mode']); ?>" class="button btn-block rounded shadow bg-grd-second text-center mt-2 p-2" />
+                    <input id="<?php echo $submitId; ?>" type="button" value="<?php echo Translator::translate($_GET['mode']); ?>" class="button btn-block rounded shadow bg-grd-first inverse-first text-center mt-2 p-2" />
                 </td>
             </tr>
         </table>

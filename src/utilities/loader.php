@@ -3,8 +3,8 @@
 abstract class Loader 
 {
 	public const HOST = "localhost";
-	public const USER = "areda";
-	public const PASS = "123";
+	public const USER = "root";
+	public const PASS = "";
 
 	public const APP_NAME = "ArDorossV2";
 
