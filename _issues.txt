@@ -10,7 +10,7 @@
     - [finished] sign.php    
 > unit.php
 > document optimization
-> adding ads
+> setting up ads
 
 # Front-end Section
 > [finished] sign in page
@@ -21,3 +21,4 @@
 > a logo for the brand
 
 # Testing
+# Penetration Testing
