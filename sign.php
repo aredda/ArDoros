@@ -30,21 +30,17 @@
             }
         }
     ?>
-    <div class="container centralized">
-        <div class="row">
-            <div class="col-md-6 offset-md-3 content-holder p-5 shadow-lg">
-                <h1 class='text-center text-primary mb-4'><a href='index.php'>أردروس</a></h1>
-                <form method='post'>
-                    <div class="form-group">
-                        <input name='admin' placeholder='اسم الأدمين' type="text" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <input name='pass' placeholder='كلمة المرور' type="password" class="form-control">
-                    </div>
-                    <button class="button inverse-second rounded shadow text-white text-center py-2 bg-grd-second btn-block">تسجيل الدخول</button>
-                </form>
+    <div class="centralized content-holder p-5 shadow-lg mx-auto">
+        <h1 class='text-center text-primary mb-5'><a href='index.php'>أردروس</a></h1>
+        <form method='post'>
+            <div class="form-group">
+                <input name='admin' placeholder='اسم الأدمين' type="text" class="form-control input-tall" />
             </div>
-        </div>
+            <div class="form-group">
+                <input name='pass' placeholder='كلمة المرور' type="password" class="form-control input-tall">
+            </div>
+            <button class="button inverse-second rounded shadow text-white text-center py-3 bg-grd-second btn-block">تسجيل الدخول</button>
+        </form>
     </div>
     <!-- Notification purposes -->
     <div class="notification">

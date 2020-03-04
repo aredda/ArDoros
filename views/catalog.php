@@ -45,13 +45,16 @@ $unitModel = Translator::translate ($criteria['model']);
     <div class="col-md-12">
         <div class="row p-3 list-view content-holder">
             <div class="col-md-12 py-2">
+                
                 <h3 class="m-0 p-0 text-success"><span class="float-left text-primary result-counter"><?php echo $units->count (); ?></span>عدد النتائج</h3>
             </div>
             <?php 
             echo "<script>";
+            echo "$(document).ready (() => {";
             echo "var list_view = $('.list-view');";
             foreach ($units as $u)
-                echo "list_view.append (createListViewItem ('model={$criteria['model']}&id=$u->id', '$u->image', '$u->title', '{$u->grade->title}', '{$u->subject->title}', '$unitModel', 'الدورة {$u->semester}'));";
+                echo "list_view.append (createListViewItem ('$u->id', '$u->title', 'lesson', '$u->image', '{$u->grade->title}', '{$u->subject->title}', '$unitModel', 'الدورة {$u->semester}'));";
+            echo "})";
             echo "</script>";
             ?>
         </div>

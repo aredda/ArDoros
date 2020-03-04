@@ -1,15 +1,17 @@
 # Back-end Section
-> templates/template.php
+> [finished] templates/template.php
     - [finished] finishing navigation panel
 > catalog.php
     - [finished] filtering functionality
     - [finished] displaying result
     - pagination
-    - can't parse recursive data error
-> authentication functionality
+    - [solved & finished] can't parse recursive data error
+> [finished] authentication functionality
     - [finished] sign.php    
-> unit.php
-> document optimization
+> [finished] unit.php
+> [finished] form.php
+    - [finished] form validation
+> [finished] document optimization
 > setting up ads
 
 # Front-end Section
@@ -19,6 +21,8 @@
     - polishing the design
     - making it responsive
 > a logo for the brand
+> [finished] event.js
+    - [finished] data displaying functionality is not flexible
 
 # Testing
 # Penetration Testing

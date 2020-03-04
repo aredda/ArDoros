@@ -1,34 +1,97 @@
-<!-- 'embed' tag is used for displaying documents -->
+<?php 
+
+// If the required information isn't provided, redirect to the home page
+if (!isset ($_GET['model']) || !isset ($_GET['id']))
+        header ('Location: index.php');
+
+$model = ucfirst ($_GET['model']);
+
+$container = $GLOBALS['db'][$model];
+$instance = $container->find ($_GET['id']);
+
+if (!file_exists (Loader::getAppDir () . '/' . $instance->path))
+{
+    // Show notification
+    echo "<script> popNotification ('عذرا', 'يتبين أن الملف الذي تريده غير متوفر', 'error'); </script>";
+    // Redirect to main page
+    header('refresh: 1; url= index.php');
+}
+else
+{
+
+$size = filesize (Loader::getAppDir () . "/{$instance->path}");
+$tags = [];
+$attachments = [];
+
+switch ($model)
+{
+    case Lesson::class:
+        // Set up tags
+        array_push ($tags, $instance->grade->title, $instance->subject->title, "الدورة " . $instance->semester, Translator::translate ($model));
+        // Set up attachments
+        if ($instance->exercises->count () > 0)
+            $attachments['تمارين متعقلة بهذ الدرس'] = $instance->exercises;
+        if ($instance->relatedExams->count () > 0)
+            $attachments['امتحانات متعقلة بهذ الدرس'] = $instance->relatedExams;
+    break;
+    
+    case Exercise::class:
+        $lesson = $instance->lesson;
+        // Set up tags
+        array_push ($tags, $lesson->grade->title, $lesson->subject->title, "الدورة " . $lesson->semester, Translator::translate ($model));
+        // Set up attachments
+        if ($lesson->exercises->count () > 0)
+            $attachments['تمارين مشابهة'] = $lesson->exercises;
+        if ($instance->corrections->count () > 0)
+        $attachments['تصحيحات لهذا التمرين'] = $instance->corrections;
+    break;
+
+    case Exam::class:
+        // Set up tags
+        array_push ($tags, $instance->year);
+        // Set up attachments
+        if ($instance->relatedLessons->count () > 0)
+        $attachments['امتحانات مشابهة'] = $instance->relatedLessons;
+    break;
+}
+?>
 <div class="row px-3">
     <!-- Main Information -->
     <div class="col-md-12 content-holder p-4">
-        <h1 class="text-second">عنوان الوحدة</h1>
+        <h1 class="text-second"><?php echo $instance->title; ?></h1>
         <h5 class="m-0 py-3">
-            <span class="badge text-white p-2 bg-grd-first">نوع الوحدة</span>
-            <span class="badge text-white p-2 bg-grd-first">الدورة</span>
-            <span class="badge text-white p-2 bg-grd-first">المادة</span>
-            <span class="badge text-white p-2 bg-grd-first">المستوى</span>
-            <span class="float-left text-first-dark">وزن الملف</span>
+            <?php 
+            foreach ($tags as $tag)
+            echo "<span class='badge text-white p-2 bg-grd-first'>$tag</span> "; ?>
+            <span class="float-left text-first-dark"><?php echo "ميغابايت " . round (($size / 1024 / 1024), 2); ?></span>
         </h5>
-        <embed class="document w-100 mt-1 rounded border border-dark" src="media/doc.pdf" />
+        <embed class="document w-100 mt-1 rounded border border-dark" src="<?php echo $instance->path; ?>" />
         <button class="button btn-block bg-grd-first text-center py-3 mt-2 shadow rounded inverse-first">تحميل</button>
     </div>
     <!-- Related Attachments -->
-    <div class="col-md-12 content-holder p-4 mt-3">
-        <h3 class="text-second text-center m-0">مرفقات</h3>
-        <ul class="list-group list-group-flush mt-2">
-            <li class="list-group-item">
-                <a class="text-first" href="#">عنوان المرفق</a>
-                <span class="float-left text-small text-muted">حجم الملف</span>
-            </li>
-            <li class="list-group-item">
-                <a class="text-first" href="#">عنوان المرفق</a>
-                <span class="float-left text-small text-muted">حجم الملف</span>
-            </li>
-            <li class="list-group-item">
-                <a class="text-first" href="#">عنوان المرفق</a>
-                <span class="float-left text-small text-muted">حجم الملف</span>
-            </li>
-        </ul>
-    </div>
+    <?php foreach ($attachments as $label => $items) { ?>
+        <div class="col-md-12 content-holder p-4 mt-3">
+            <h3 class="text-second text-center m-0"><?php echo $label; ?></h3>
+            <ul class="list-group list-group-flush mt-2">
+            <?php
+                $itemModel = $items->class;
+                foreach ($items as $item)
+                {
+                    // Check if the path of the file exists
+                    if (!file_exists (Loader::getAppDir() . "/$item->path"))
+                        continue;
+
+                    /** Adjusting the item */
+                    $i = is_a ($item, ExamLesson::class) ? (strcmp ($container->class, Lesson::class) == 0 ? $item->exam : $item->lesson) : $item;
+                    ?>
+                <li class="list-group-item">
+                    <a class="text-first" href="unit.php?<?php echo "model=$itemModel&id={$i->id}";?>"><?php echo $i->title;?></a>
+                    <span class="float-left text-small text-muted"><?php echo "ميغابايت " . round (filesize (Loader::getAppDir () . "/{$i->path}") / 1024 / 1024, 2);?></span>
+                </li>
+                <?php } ?>
+            </ul>
+        </div>
+        <?php } ?>
 </div>
+
+<?php }

@@ -91,7 +91,7 @@ class SQLConverter
         $containers = [];
 
         foreach ($reflecter->getProperties() as $property)
-            if ( SQLConverter::get_constraint($property, "@hasMany") != null )
+            if (SQLConverter::get_constraint($property, "@hasMany") != null)
                 array_push ($containers, $property);
             
         return $containers;

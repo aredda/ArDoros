@@ -291,23 +291,27 @@ a
     opacity: 0.75;
 }
 
-.centralized
-{
-    transform: translateY(25%);
-}
-
 .hover-shadow
 {
     transition: box-shadow 0.5s;
 }
 
-.hover-shadow:hover
-{
-    box-shadow: 0 0 5px var(--dark);
-}
+.hover-shadow:hover { box-shadow: 0 0 5px var(--dark); }
 
-.half-scaled
-{
+.half-scaled {
     transform-origin: center left;
     transform: scale(0.6);
+}   
+
+.centralized {
+    position: absolute;      
+    top: 50%;
+    left: 30%;  
+    width: 40%; 
+    transform: translateY(-50%);
+}
+
+.input-tall
+{
+    height: 50px !important;
 }

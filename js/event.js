@@ -102,7 +102,7 @@ $(document).ready(function () {
         // Append the params from URL
         for (var key in getUrlParams ())
             data.append (key, getUrlParams()[key]);
-        // Send an INSERT request
+        // Send a request
         ajaxRequest ('src/medium.php', data, function (response) {
             // Confirmation pop-up
             var header = response.hasOwnProperty ('success') ? 'نجاح' : 'فشل';
@@ -133,6 +133,8 @@ $(document).ready(function () {
             // Remove from view
             if (response.hasOwnProperty ('success'))
                 parent.remove ();
+            else
+                popNotification ('عذرا', 'فشلت عملية الحذف', 'error');
         });
     });
 
@@ -150,26 +152,51 @@ $(document).ready(function () {
         for (var key of keys)
             data.append (key, $("*[name=" + key + "]").val ());
         // Send a SEARCH request
-        ajaxRequest ('src/medium.php', data, function (response) {
+        ajaxRequest ('src/medium.php', data, (response) => {
             // Extract data
             var dataArr = response.success.array;
-            
-            console.table (dataArr);
             // Retrieve container
             var container = $(".list-view");
             // Retrieve result counter
             var counter = $(".result-counter");
             // Remove all items
-            dominoEffect ($(".list-view-item-container"), 400, 'out', 0, function (){
+            dominoEffect ($(".list-view-item-container"), 400, 'out', 0, () => {
                 // Update result counter
                 counter.html (dataArr.length);
                 // Display data
                 for (var item of dataArr)
                 {
-                    // Destructuring
-                    var {id, image, title, semester } = item;
-                    // instantiate an item view 
-                    var itemView = createListViewItem(`model=${data.get('model')}&id=${id}`, image, title, item.grade.title, item.subject.title, response.success.class, semester);
+                    // Retrieve data that they have in common
+                    let { id, title } = item;
+                    // Declare other information
+                    let image = 'media/unavailable.jpg', semester, grade, subject, year;
+                    // Adjust data depending on the class
+                    switch (response.success.class)
+                    {
+                        case 'درس':
+                            ({ image, semester, grade, subject } = item);
+                            break;
+                        
+                        case 'تمرين':
+                            ({ grade, subject, semester } = item.lesson);
+                            break;
+
+                        case 'امتحان':
+                            ({ year } = item);
+                            break;
+                    }
+                    // Instantiate an item view 
+                    var itemView = createListViewItem (
+                        id, 
+                        title,
+                        data.get('model'), 
+                        image, 
+                        (grade == null ? null : grade.title), 
+                        (subject == null ? null : subject.title), 
+                        (semester == null ? null : `الدورة ${semester}`), 
+                        response.success.class, 
+                        year
+                    );
                     // hide it
                     itemView.css ({'display': 'none'});
                     // append it
@@ -178,7 +205,7 @@ $(document).ready(function () {
                 dominoEffect ($(".list-view-item-container"), 400, 'in', 0);
             });
         }, 'post', 'json', function (a, b, c){
-            popNotification ('error', c, 'error');
+            popNotification ('error', c, 'error');s
         });
     });
 

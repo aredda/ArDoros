@@ -8,21 +8,51 @@ include "utilities/translator.php";
 /**
  * Remove any signs of recursive connections
  */
-function removeRecursion (Table $table)
+function removeRecursion (Table $a)
 {
-    $reflector = new ReflectionClass ($table->class);
+    $aReflector = new ReflectionClass ($a->class);
 
-    foreach ($reflector->getProperties () as $prop)
+    foreach (['@references', '@hasMany'] as $annotation)
+    foreach ($aReflector->getProperties () as $aProperty)
     {
-        $reference = SQLConverter::get_constraint ($prop, "@references");
+        $aTarget = SQLConverter::get_constraint($aProperty, $annotation); 
+        
+        if ($aTarget == null) continue;
 
-        if ($reference != null)
-            foreach (SQLConverter::get_children_containers ($reference) as $cp)
-                foreach ($table as $record)
-                    $cp->setValue ($prop->getValue ($record), null);
+        switch ($annotation)
+        {
+            case '@references':
+                foreach ($a as $aRecord)
+                {
+                    $bRecord = $aProperty->getValue ($aRecord);
+                    $bContainers = SQLConverter::get_children_containers ($aTarget);
+
+                    foreach ($bContainers as $bContainer)
+                    {
+                        if (strcmp (SQLConverter::get_constraint($bContainer, '@hasMany'), get_class($a)) != 0)
+                            continue;
+
+                        $bContainer->setValue ($bRecord, null);
+                    }
+                }
+            break;
+
+            case '@hasMany':
+                $bTarget = SQLConverter::search_property ($aTarget, '@references', $a->class);
+                
+                foreach ($a as $aRecord)
+                {
+                    $aContainer = $aProperty->getValue ($aRecord);
+                    
+                    if ($aContainer != null)
+                    foreach ($aContainer as $bRecord)
+                        $bTarget->setValue ($bRecord, null);
+                }
+            break;
+        }
     }
 
-    return $table;
+    return $a;
 }
 
 /**
@@ -36,16 +66,20 @@ function tweak (Table $table)
 }
 
 // Handle incoming POST requests
-try
+if (count ($_POST) > 0)
 {
-    $response = RequestHandler::handle ($_POST, $_FILES);
-
-    if (is_a($response, Table::class))
-        $response = tweak (removeRecursion ($response));
-
-    echo json_encode (['success' => $response], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-}
-catch (Exception $e)
-{
-    echo json_encode (['error' => $e->getMessage ()]);
+    try
+    {
+        $response = RequestHandler::handle ($_POST, $_FILES);
+    
+        // If the returned response is a Table instance, then purify it from recursion
+        if (is_a($response, Table::class))
+            $response = tweak ($response);
+    
+        echo json_encode (['success' => $response], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+    catch (Exception $e)
+    {
+        echo json_encode (['error' => $e->getMessage ()]);
+    }
 }

@@ -81,7 +81,7 @@ abstract class Database implements ArrayAccess
     }
 
     // Loading data from all tables
-    public function refresh()
+    public function refresh ($lazyMode = false)
     {
         // Save changes before refreshing
         $this->save();
@@ -91,6 +91,7 @@ abstract class Database implements ArrayAccess
             $this->tables[$name] = $this->load_table($name);
 
         // Load children containers
+        if (!$lazyMode)
         foreach ($this->tables as $table)
             $this->load_children ($table);
     }

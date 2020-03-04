@@ -29,7 +29,7 @@ abstract class Uploader
         {
             // Check if the uploaded file matches the permitted properties
             if (!array_key_exists ($name, Uploader::$mimeTypes))
-                throw new Exception ("Can't upload the file, unknown target.");
+                throw new Exception ("Can't upload the file, unknown target");
             
             // Check if there's actually a file
             if ($details['size'] == 0)
@@ -59,4 +59,18 @@ abstract class Uploader
         return $uploaded;
     }
     
+    /**
+     * Delete related files of this record
+     */
+    public static function delete (array $files)
+    {
+        foreach ($files as $filePath)
+        {
+            $fullPath = Loader::getAppDir () . "/$filePath";
+
+            if (file_exists ($fullPath))
+                unlink ($fullPath);
+        }
+    }
+
 }

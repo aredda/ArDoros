@@ -2,6 +2,9 @@
 
 $data = $GLOBALS['db'];
 
+// Reload database EAGERLY
+$data->refresh ();
+
 $grades = $data[Grade::class];
 $lessons = $data[Lesson::class];
 
