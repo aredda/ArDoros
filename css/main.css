@@ -89,7 +89,8 @@ a
 .content-holder,
 .list-view-item,
 :not(.nav-item-body) > .nav-item,
-.notification
+.notification,
+.nav-pagination
 {
     overflow: hidden;
     border-radius: 4px;
@@ -314,4 +315,42 @@ a
 .input-tall
 {
     height: 50px !important;
+}
+
+.nav-pagination
+{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    border: 1px solid silver;
+}
+
+.nav-pagination-item
+{
+    text-align: center !important;
+    flex-grow: 1;
+    padding: 5px 0;
+    border-right: 1px solid silver;
+    cursor: pointer;
+}
+
+.nav-pagination-item:last-child
+{
+    border-width: 0;
+}
+
+/* @media rules for a responsive layout  */
+@media (max-width: 768px) 
+{
+    .brand
+    {
+        margin-top: 32px;
+    }
+    .brand *
+    {
+        text-align: center !important;
+    }
 }

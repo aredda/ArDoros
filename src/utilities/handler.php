@@ -151,6 +151,11 @@ abstract class RequestHandler
 
                     case Exam::class:
 
+                        // Refresh eagerly
+                        $GLOBALS['db']->refresh ();
+                        // Update container
+                        $rescursiveContainer = $GLOBALS['db'][$model];
+                        // Determine filter method
                         $filterMethod = function ($iterator, array $criteria)
                         {
                             if (empty ($criteria['title']))
@@ -160,6 +165,15 @@ abstract class RequestHandler
                                 return strpos ($i->lesson->title, $c['title']) !== false;
                             }, $criteria)->count () > 0 ;
                         };
+                        // Filter the container
+                        $recursiveResult = $rescursiveContainer->where ($filterMethod, $params);
+                        // Construct a container that is not recursive
+                        $pureResult = new Table ($model);
+                        // Fill that container
+                        foreach ($recursiveResult as $record)
+                            $pureResult->add ($container->find ($record->id));
+
+                        return $pureResult;
 
                     break;
                 }

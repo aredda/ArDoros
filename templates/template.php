@@ -39,10 +39,11 @@ class Template
                     <div class="col-md-9">
                         <div class="search-panel">
                             <button class="button btn-search bg-grd-first m-0 p-3">ابحث</button>
-                            <input class="m-0 p-3" name="title" placeholder="عنوان الدرس..." />
+                            <input class="m-0 p-3" name="title" placeholder="...عنوان الدرس" />
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <!-- Brand Section -->
+                    <div class="col-md-3 brand">
                         <a href="index.php"><h1 class="text-primary font-weight-bold">أردروس</h1></a>
                     </div>
                 </div>

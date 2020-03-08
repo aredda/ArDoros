@@ -25,7 +25,7 @@ $unitModel = Translator::translate ($criteria['model']);
         $items = is_null($values) ? $GLOBALS['db'][ucfirst($label)] : $values;
 
         echo "<div class='col-md-3 p-1'>";
-        echo "<h6 class=text-first font-weight-bol'>" . Translator::translate($label) . "</h6>";
+        echo "<h6 class='text-first font-weight-bold'>" . Translator::translate($label) . "</h6>";
         echo "<select class='w-100 p-2' name=$label>";
         foreach ($items as $item)
         {
@@ -45,8 +45,7 @@ $unitModel = Translator::translate ($criteria['model']);
     <div class="col-md-12">
         <div class="row p-3 list-view content-holder">
             <div class="col-md-12 py-2">
-                
-                <h3 class="m-0 p-0 text-success"><span class="float-left text-primary result-counter"><?php echo $units->count (); ?></span>عدد النتائج</h3>
+                <h3 class="m-0 p-0 text-second"><span class='text-primary float-left result-counter'><?php echo $units->count (); ?></span>:عدد النتائج</h3>
             </div>
             <?php 
             echo "<script>";

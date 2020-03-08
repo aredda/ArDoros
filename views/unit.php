@@ -18,7 +18,6 @@ if (!file_exists (Loader::getAppDir () . '/' . $instance->path))
 }
 else
 {
-
 $size = filesize (Loader::getAppDir () . "/{$instance->path}");
 $tags = [];
 $attachments = [];
@@ -43,19 +42,22 @@ switch ($model)
         if ($lesson->exercises->count () > 0)
             $attachments['تمارين مشابهة'] = $lesson->exercises;
         if ($instance->corrections->count () > 0)
-        $attachments['تصحيحات لهذا التمرين'] = $instance->corrections;
+            $attachments['تصحيحات لهذا التمرين'] = $instance->corrections;
     break;
 
     case Exam::class:
         // Set up tags
         array_push ($tags, $instance->year);
-        // Set up attachments
+        // Set up related lessons
         if ($instance->relatedLessons->count () > 0)
-        $attachments['امتحانات مشابهة'] = $instance->relatedLessons;
+            $attachments['دروس متعلقة بهذا الامتحان'] = $instance->relatedLessons;
+        // Set up related corrections
+        if ($instance->corrections->count () > 0)
+            $attachments['تصحيحات لهذا الامتحان'] = $instance->corrections;
     break;
 }
 ?>
-<div class="row px-3">
+<div class="row px-3 pb-4">
     <!-- Main Information -->
     <div class="col-md-12 content-holder p-4">
         <h1 class="text-second"><?php echo $instance->title; ?></h1>
@@ -66,7 +68,9 @@ switch ($model)
             <span class="float-left text-first-dark"><?php echo "ميغابايت " . round (($size / 1024 / 1024), 2); ?></span>
         </h5>
         <embed class="document w-100 mt-1 rounded border border-dark" src="<?php echo $instance->path; ?>" />
-        <button class="button btn-block bg-grd-first text-center py-3 mt-2 shadow rounded inverse-first">تحميل</button>
+        <a href="<?php echo $instance->path; ?>">
+            <button class="button btn-block bg-grd-first text-center py-3 mt-2 shadow rounded inverse-first">تحميل</button>
+        </a>
     </div>
     <!-- Related Attachments -->
     <?php foreach ($attachments as $label => $items) { ?>
@@ -74,15 +78,15 @@ switch ($model)
             <h3 class="text-second text-center m-0"><?php echo $label; ?></h3>
             <ul class="list-group list-group-flush mt-2">
             <?php
-                $itemModel = $items->class;
                 foreach ($items as $item)
                 {
-                    // Check if the path of the file exists
-                    if (!file_exists (Loader::getAppDir() . "/$item->path"))
-                        continue;
-
                     /** Adjusting the item */
                     $i = is_a ($item, ExamLesson::class) ? (strcmp ($container->class, Lesson::class) == 0 ? $item->exam : $item->lesson) : $item;
+                    // Get the model
+                    $itemModel = get_class($i);
+                    // Check if the path of the file exists
+                    if (!file_exists (Loader::getAppDir() . "/$i->path"))
+                        continue;
                     ?>
                 <li class="list-group-item">
                     <a class="text-first" href="unit.php?<?php echo "model=$itemModel&id={$i->id}";?>"><?php echo $i->title;?></a>
