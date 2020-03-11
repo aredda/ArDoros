@@ -141,7 +141,15 @@ $(document).ready(function () {
     /**
      * Search button event
      */
-    $(".btn-search").on ('click', function (){
+    $(".btn-search").on ('click', () => {
+        // If the current page is not index, then redirect to index
+        if (window.location.href.includes ('unit.php'))
+        {
+            // Retrieve the title
+            let title = $("*[name='title']").val ();
+            // Redirect
+            window.location.href = 'index.php' + ((title.length > 0) ? `?title=${title}` : '');
+        }   
         // Criteria to send
         var keys = ['model', 'title', 'grade', 'subject', 'semester'];
         // Create an empty form data
@@ -150,7 +158,7 @@ $(document).ready(function () {
         data.append ('type', 'search');
         // Gather the values of those keys
         for (var key of keys)
-            data.append (key, $("*[name=" + key + "]").val ());
+            data.append (key, $(`*[name=${key}]`).val ());
         // Send a SEARCH request
         ajaxRequest ('src/medium.php', data, (response) => {
             // Extract data

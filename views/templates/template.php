@@ -21,8 +21,11 @@ class Template
 
     private function render ()
     {
+        global $rootPath;
+
         include_once "src/utilities/loader.php";
         include_once "src/utilities/translator.php";
+
         ?>
         <!DOCTYPE html>
         <html lang="en">
