@@ -13,6 +13,8 @@ x   - [eliminated] pagination
     - [finished] form validation
 > [finished] document optimization
 ?> setting up ads
+?> list.php
+    - automatically delete related child instances of the parent instance 
 
 # Front-end Section
 > [finished] sign in page
