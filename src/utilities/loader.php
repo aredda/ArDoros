@@ -25,7 +25,7 @@ abstract class Loader
 	 */
 	public static function getAppDir ()
 	{
-		return "{$_SERVER['DOCUMENT_ROOT']}/projects/" . Loader::APP_NAME;
+		return "{$_SERVER['DOCUMENT_ROOT']}/" . Loader::APP_NAME;
 	}
 
 	/**
