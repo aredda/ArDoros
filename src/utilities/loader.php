@@ -6,7 +6,7 @@ abstract class Loader
 	public const USER = "root";
 	public const PASS = "";
 
-	public const APP_NAME = "ArDorossV2";
+	public const APP_NAME = "ArDoros";
 
 	/**
 	 * @var array
@@ -25,7 +25,7 @@ abstract class Loader
 	 */
 	public static function getAppDir ()
 	{
-		return "{$_SERVER['DOCUMENT_ROOT']}/" . Loader::APP_NAME;
+		return "{$_SERVER['DOCUMENT_ROOT']}/projects/" . Loader::APP_NAME;
 	}
 
 	/**
