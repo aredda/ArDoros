@@ -53,5 +53,12 @@ abstract class Loader
 }
 
 // When 'loader.php' is included, load all required files, and get database
-Loader::load ();
-Loader::getDatabase ();
+try
+{
+	Loader::load ();
+	Loader::getDatabase ();
+}
+catch(Exception $e)
+{
+	echo $e->getMessage();
+}
