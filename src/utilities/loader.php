@@ -5,6 +5,7 @@ abstract class Loader
 	public const HOST = "localhost";
 	public const USER = "root";
 	public const PASS = "";
+	public const DTBS = "";
 
 	public const APP_NAME = "ArDoros";
 
@@ -25,7 +26,7 @@ abstract class Loader
 	 */
 	public static function getAppDir ()
 	{
-		return "{$_SERVER['DOCUMENT_ROOT']}/" . Loader::APP_NAME;
+		return "{$_SERVER['DOCUMENT_ROOT']}/" . self::APP_NAME;
 	}
 
 	/**
@@ -48,7 +49,7 @@ abstract class Loader
 	public static function getDatabase ()
 	{
 		if (!isset ($GLOBALS['db']))
-			$GLOBALS["db"] = new DbArdoros (new mysqli (self::HOST, self::USER, self::PASS));
+			$GLOBALS["db"] = new DbArdoros (self::DTBS, new mysqli (self::HOST, self::USER, self::PASS));
 	}
 }
 

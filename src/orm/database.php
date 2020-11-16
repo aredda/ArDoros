@@ -2,14 +2,22 @@
 
 abstract class Database implements ArrayAccess
 {
+    public $name;
     public $connection;
     public $tables;
 
-    public function __construct($connection)
+    public function __construct($name, $connection)
     {
+        $this->name = $name;
         $this->connection = $connection;
         
         $this->setup();
+    }
+
+    // Get actual name
+    public function get_name()
+    {
+        return empty($this->name) || !isset($this->name) ? get_class($this) : $this->name;
     }
 
     // Contains the setup instructions
@@ -53,15 +61,12 @@ abstract class Database implements ArrayAccess
     // Check if the database is created
     public function is_created()
     {
-        return $this->connection->select_db(get_class($this));
+        return $this->connection->select_db($this->get_name());
     }
 
     // Create database if not existed
     public function create()
     {
-        if ($this->is_created())
-            throw new Exception("A database already exists with the same name.");
-
         if (is_null($this->tables))
             throw new Exception("This database has no tables to create.");
 
@@ -155,8 +160,8 @@ abstract class Database implements ArrayAccess
     // Constructing the creation script
     public function get_creation_script()
     {
-        $script = "CREATE DATABASE IF NOT EXISTS " . get_class($this) . "; ";
-        $script .= "USE " . get_class($this) . "; ";
+        $script = "CREATE DATABASE IF NOT EXISTS " . $this->get_name() . "; ";
+        $script .= "USE " . $this->get_name() . "; ";
 
         foreach ($this->tables as $key => $table)
             $script .= SQLConverter::create_table($key) . "; ";
