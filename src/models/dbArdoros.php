@@ -17,6 +17,8 @@ class DbArdoros
             ExamLesson::class
         );
 
+        // Select database
+        $this->select_db ($this->name);
         // If it is indeed created, load data
         $this->refresh ();
     }
