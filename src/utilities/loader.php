@@ -3,9 +3,9 @@
 abstract class Loader 
 {
 	public const HOST = "localhost";
-	public const USER = "root";
-	public const PASS = "";
-	public const DTBS = "";
+	public const USER = "u621104737_areda";
+	public const PASS = "txRwGcuS2#";
+	public const DTBS = "u621104737_ardoros";
 
 	public const APP_NAME = "ArDoros";
 
