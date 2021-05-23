@@ -18,7 +18,7 @@ class DbArdoros
         );
 
         // Select database
-        $this->select_db ($this->name);
+        $this->connection->select_db ($this->name);
         // If it is indeed created, load data
         $this->refresh ();
     }
