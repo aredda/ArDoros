@@ -7,7 +7,7 @@ abstract class Loader
 	public const PASS = "txRwGcuS2#";
 	public const DTBS = "u621104737_ardoros";
 
-	public const APP_NAME = "ArDoros";
+	public const APP_NAME = "";
 
 	/**
 	 * @var array
@@ -52,6 +52,8 @@ abstract class Loader
 			$GLOBALS["db"] = new DbArdoros (self::DTBS, new mysqli (self::HOST, self::USER, self::PASS));
 	}
 }
+
+echo Loader::getAppDir();
 
 // When 'loader.php' is included, load all required files, and get database
 try
