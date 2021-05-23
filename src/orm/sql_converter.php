@@ -180,6 +180,13 @@ class SQLConverter
         $connection->query ("SET NAMES utf8");
         // Query result
         $result = $connection->query($query);
+
+        if(!$result)
+        {
+            echo $connection->error;
+            return;
+        }
+
         // Add to the empty array
         while ($row = $result->fetch_assoc())
             array_push($data, $row);
