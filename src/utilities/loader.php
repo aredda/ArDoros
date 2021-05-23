@@ -53,13 +53,13 @@ abstract class Loader
 	}
 }
 
-echo Loader::getAppDir();
-
 // When 'loader.php' is included, load all required files, and get database
 try
 {
 	Loader::load ();
 	Loader::getDatabase ();
+
+	echo $GLOBALS["db"]->get_creation_script();
 }
 catch(Exception $e)
 {
