@@ -17,7 +17,7 @@ class DbArdoros
             ExamLesson::class
         );
 
-        // If the database is not created, create it
-        $this->create ();
+        // If it is indeed created, load data
+        $this->refresh ();
     }
 }

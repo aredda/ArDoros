@@ -58,8 +58,6 @@ try
 {
 	Loader::load ();
 	Loader::getDatabase ();
-
-	echo $GLOBALS["db"]->get_creation_script();
 }
 catch(Exception $e)
 {
