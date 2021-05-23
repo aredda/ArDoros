@@ -184,7 +184,7 @@ class SQLConverter
         if(!$result)
         {
             echo $connection->error;
-            return;
+            return [];
         }
 
         // Add to the empty array
