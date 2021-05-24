@@ -49,7 +49,7 @@ class AdminTemplate
                 <div class="row mb-4">
                     <div class="col-md-3">
                         <a href='menu.php'>
-                            <h1 class='half-scaled m-0 text-left text-second'>لوحة التحكم</h1>
+                            <h1 class='half-scaled m-0 text-left text-second'><i class="fal fa-solar-panel"></i>لوحة التحكم</h1>
                         </a>
                     </div>
                     <div class="col-md-3 offset-md-6">
