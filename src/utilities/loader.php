@@ -7,7 +7,7 @@ abstract class Loader
 	public const PASS = "";
 	public const DTBS = "u621104737_ardoros";
 
-	public const APP_NAME = "";
+	public const APP_NAME = "ArDoros";
 
 	/**
 	 * @var array
