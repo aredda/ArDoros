@@ -7,3 +7,4 @@
 <script src="js/component.js"></script>
 <script src="js/effect.js"></script>
 <script src="js/event.js"></script>
+<script data-ad-client="ca-pub-7064691516440282" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
