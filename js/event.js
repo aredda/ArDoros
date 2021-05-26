@@ -217,4 +217,12 @@ $(document).ready(function () {
         });
     });
 
+    // Filter Panel Checkbox Effect
+    $(".switch input[type='checkbox']").change(function() {
+        let html_h6 = $(this).parent().parent().next().find("h6");
+        let html_select = $(this).parent().parent().parent().next();
+        html_select.prop("disabled", !this.checked)
+        html_h6.toggleClass("text-first text-secondary")
+    });
+
 });

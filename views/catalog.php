@@ -25,7 +25,17 @@ $unitModel = Translator::translate ($criteria['model']);
         $items = is_null($values) ? $GLOBALS['db'][ucfirst($label)] : $values;
 
         echo "<div class='col-md-3 p-1'>";
+        echo "<div class='d-flex flex-row'>";
+        echo "<div class='flex-fill text-left'>";
+        echo "<label class='switch'>";
+        echo "<input type='checkbox' checked>";
+        echo "<span class='slider round'></span>";
+        echo "</label>";
+        echo "</div>";
+        echo "<div class='label flex-fill'>";
         echo "<h6 class='text-first font-weight-bold'>" . Translator::translate($label) . "</h6>";
+        echo "</div>";
+        echo "</div>";
         echo "<select class='w-100 p-2' name=$label>";
         foreach ($items as $item)
         {
