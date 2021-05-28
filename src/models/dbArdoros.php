@@ -21,11 +21,11 @@ class DbArdoros
         /** 
          * IMPORTANT: First, run this one, then comment it
          * */
-        $this->create();
+        // $this->create();
 
         // Select database
-        // $this->connection->select_db ($this->name);
+        $this->connection->select_db ($this->name);
         // If it is indeed created, load data
-        // $this->refresh ();
+        $this->refresh ();
     }
 }
