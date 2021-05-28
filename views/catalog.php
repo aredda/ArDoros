@@ -36,7 +36,7 @@ $unitModel = Translator::translate ($criteria['model']);
         echo "<h6 class='text-first font-weight-bold'>" . Translator::translate($label) . "</h6>";
         echo "</div>";
         echo "</div>";
-        echo "<select class='w-100 p-2' name=$label>";
+        echo "<select class='w-100 p-2 filter-switch' name=$label>";
         foreach ($items as $item)
         {
             if (is_a ($item, ucfirst($label)))

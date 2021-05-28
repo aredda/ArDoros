@@ -35,13 +35,13 @@ function ajaxRequest (url, data, onSuccess, method = 'POST', returnDataType = 'J
  */
 function getUrlParams ()
 {
-    var query = window.location.search.substring(1);
-    var params = query.split ('&');
+    let query = window.location.search.substring(1);
+    let params = query.split ('&');
 
-    var object = new Object ();
-    for (var param of params)
+    let object = new Object ();
+    for (let param of params)
     {
-        var pair = param.split ('=');
+        let pair = param.split ('=');
 
         object[pair[0]] = pair[1];
     }
@@ -49,7 +49,110 @@ function getUrlParams ()
     return object;
 }
 
+/**
+ * A method to facilitate refreshing catalog items view
+ */
+function updateCatalog(data)
+{
+    ajaxRequest ('src/medium.php', data, (response) => {
+        // Extract data
+        let dataArr = response.success.array;
+        // Retrieve container
+        let container = $(".list-view");
+        // Retrieve result counter
+        let counter = $(".result-counter");
+        // Remove all items
+        dominoEffect ($(".list-view-item-container"), 400, 'out', 0, () => {
+            // Update result counter
+            counter.html (dataArr.length);
+            // Continuation
+            let onComplete = function (){
+                // Display data
+                for (let item of dataArr)
+                {
+                    // Retrieve data that they have in common
+                    let { id, title } = item;
+                    // Declare other information
+                    let image = 'media/unavailable.jpg', semester, grade, subject, year;
+                    // Adjust data depending on the class
+                    switch (response.success.class)
+                    {
+                        case 'درس':
+                            ({ image, semester, grade, subject } = item);
+                            break;
+
+                        case 'تمرين':
+                            ({ grade, subject, semester } = item.lesson);
+                            break;
+
+                        case 'امتحان':
+                            ({ year } = item);
+                            break;
+                    }
+                    // Instantiate an item view
+                    let itemView = createListViewItem (
+                        id,
+                        title,
+                        data.get('model'),
+                        image,
+                        (grade == null ? null : grade.title),
+                        (subject == null ? null : subject.title),
+                        (semester == null ? null : `الدورة ${semester}`),
+                        response.success.class,
+                        year
+                    );
+                    // hide it
+                    itemView.css ({'display': 'none'});
+                    // append it
+                    container.append (itemView);
+                }
+                // Show results
+                dominoEffect ($(".list-view-item-container"), 400, 'in', 0);
+            };
+            // If there's no data, then show banner
+            if(dataArr.length == 0)
+                $(".banner-not-found").fadeIn(400, onComplete);
+            else
+                $(".banner-not-found").fadeOut(400, onComplete);
+        });
+    }, 'post', 'json', function (a, b, c){
+        popNotification ('error', c, 'error');
+    });
+}
+
 $(document).ready(function () {
+
+    /**
+     * Filter Panel Setup
+     */
+    let filter_switches = []
+    $('.switch input').each(function (index){
+        // Retrieve select element
+        filter_switches.push($(this).parent().parent().parent().next());
+    });
+    // Configure change event
+    for (let select of filter_switches)
+    {
+        select.change(function (){
+            let data = new FormData();
+            data.append('type', 'search');
+            // Loop through checkboxes and retrieve data if they are
+            $('.switch input').each(function (index){
+                if(this.checked)
+                {
+                    // Retrieve corresponding select element
+                    let target_select = $('.filter-switch').eq(index);
+                    // Store filter criteria
+                    data.append(target_select.attr('name'), target_select.val());
+                }
+            });
+            // If there's no model then add a default
+            if(!data.has('model'))
+                data.append('model', 'Lesson');
+            // Send filter request & update view
+            updateCatalog(data);
+        });
+    }
 
     /**
      * This is the navigation item's functionality
@@ -91,22 +194,22 @@ $(document).ready(function () {
      */
     $("#btn-insert, #btn-update").on ('click', function () {
         // Retrieve data
-        var data = serialize ("#form");
+        let data = serialize ("#form");
         // Retrieve form type from the element id
-        var btnId = $(this).attr ('id');
+        let btnId = $(this).attr ('id');
         // Extract mode from id
-        var mode = btnId.split ('-') [1];
+        let mode = btnId.split ('-') [1];
         // Append request's type
         data.append ('type', mode);
         // Append the params from URL
-        for (var key in getUrlParams ())
+        for (let key in getUrlParams ())
             data.append (key, getUrlParams()[key]);
         // Send a request
         ajaxRequest ('src/medium.php', data, function (response) {
             // Confirmation pop-up
-            var header = response.hasOwnProperty ('success') ? 'نجاح' : 'فشل';
-            var type = response.hasOwnProperty ('success') ? 'success' : 'fail';
-            var message = response.hasOwnProperty ('success') ? 'تمت العملية بنجاح' : response.error;
+            let header = response.hasOwnProperty ('success') ? 'نجاح' : 'فشل';
+            let type = response.hasOwnProperty ('success') ? 'success' : 'fail';
+            let message = response.hasOwnProperty ('success') ? 'تمت العملية بنجاح' : response.error;
 
             popNotification(header, message, type);
         });
@@ -117,15 +220,15 @@ $(document).ready(function () {
      */
     $(".btn-delete").on ('click', function (){
         // Retrieve the parent row
-        var parent = $(this).closest ('tr');
+        let parent = $(this).closest ('tr');
         // Retrieve data id
-        var id = parent.attr ('data-id');
+        let id = parent.attr ('data-id');
         // Construct a form data object
-        var data = new FormData ();
+        let data = new FormData ();
         // Provide the required data to send
         data.append ('id', id);
         data.append ('type', 'delete');
-        for (var key in getUrlParams ())
+        for (let key in getUrlParams ())
             data.append (key, getUrlParams()[key]);
         // Send a DELETE request
         ajaxRequest ('src/medium.php', data, function (response) {
@@ -150,81 +253,23 @@ $(document).ready(function () {
             window.location.href = 'index.php' + ((title.length > 0) ? `?title=${title}` : '');
         }   
         // Criteria to send
-        var keys = ['model', 'title', 'grade', 'subject', 'semester'];
+        let keys = ['model', 'title'];
         // Create an empty form data
-        var data = new FormData ();
+        let data = new FormData ();
         // Specify the type of the request
         data.append ('type', 'search');
         // Gather the values of those keys
-        for (var key of keys)
+        for (let key of keys)
             data.append (key, $(`*[name=${key}]`).val ());
         // Send a SEARCH request
-        ajaxRequest ('src/medium.php', data, (response) => {
-            // Extract data
-            var dataArr = response.success.array;
-            // Retrieve container
-            var container = $(".list-view");
-            // Retrieve result counter
-            var counter = $(".result-counter");
-            // Controlling Not found banner
-            if(dataArr.length == 0)
-                $(".banner-not-found").fadeIn(400)
-            else 
-                $(".banner-not-found").fadeOut(400)
-            // Remove all items
-            dominoEffect ($(".list-view-item-container"), 400, 'out', 0, () => {
-                // Update result counter
-                counter.html (dataArr.length);
-                // Display data
-                for (var item of dataArr)
-                {
-                    // Retrieve data that they have in common
-                    let { id, title } = item;
-                    // Declare other information
-                    let image = 'media/unavailable.jpg', semester, grade, subject, year;
-                    // Adjust data depending on the class
-                    switch (response.success.class)
-                    {
-                        case 'درس':
-                            ({ image, semester, grade, subject } = item);
-                            break;
-                        
-                        case 'تمرين':
-                            ({ grade, subject, semester } = item.lesson);
-                            break;
-
-                        case 'امتحان':
-                            ({ year } = item);
-                            break;
-                    }
-                    // Instantiate an item view 
-                    var itemView = createListViewItem (
-                        id, 
-                        title,
-                        data.get('model'), 
-                        image, 
-                        (grade == null ? null : grade.title), 
-                        (subject == null ? null : subject.title), 
-                        (semester == null ? null : `الدورة ${semester}`), 
-                        response.success.class, 
-                        year
-                    );
-                    // hide it
-                    itemView.css ({'display': 'none'});
-                    // append it
-                    container.append (itemView);
-                }
-                dominoEffect ($(".list-view-item-container"), 400, 'in', 0);
-            });
-        }, 'post', 'json', function (a, b, c){
-            popNotification ('error', c, 'error');s
-        });
+        updateCatalog(data);
     });
 
     // Filter Panel Checkbox Effect
     $(".switch input[type='checkbox']").change(function() {
         let html_h6 = $(this).parent().parent().next().find("h6");
         let html_select = $(this).parent().parent().parent().next();
+
         html_select.prop("disabled", !this.checked)
         html_h6.toggleClass("text-first text-secondary")
     });

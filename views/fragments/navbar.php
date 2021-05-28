@@ -17,6 +17,15 @@ foreach ($gradeCategories as $category)
             </div>
             <i class="fas fa-chevron-right chevrolet"></i>
         </div>
+        <?php
+        if ($category->grades->count () > 0)
+        {
+            echo "<div class='nav-item-body bg-white'>";
+            foreach ($category->grades as $grade)
+                echo "<a href='index.php?grade=$grade->id' class='nav-item'>$grade->title</a>";
+            echo "</div>";
+        }
+        ?>
     </div>
 <?php
 }
