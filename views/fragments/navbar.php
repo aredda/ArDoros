@@ -19,9 +19,11 @@ foreach ($grades as $grade)
             $gradeSubjects->add ($lesson->subject);        
 ?>
     <div class="nav-item">
-        <div class="nav-item-header bg-grd-second">
-            <a><?php echo $grade->title; ?></a>
-            <span>&rtrif;</span>
+        <div class="nav-item-header bg-grd-second d-flex flex-row-reverse align-items-center">
+            <div class="flex-fill">
+                <a class><?php echo $grade->title; ?></a>
+            </div>
+            <i class="fas fa-chevron-right"></i>
         </div>
         <?php
         if ($gradeSubjects->count () > 0)

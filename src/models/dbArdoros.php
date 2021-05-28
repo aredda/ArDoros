@@ -7,6 +7,7 @@ class DbArdoros
     {
         // Determining the classes to map
         $this->map (
+            GradeCategory::class,
             Grade::class,
             Subject::class,
             Lesson::class,
@@ -16,6 +17,11 @@ class DbArdoros
             ExamCorrection::class,
             ExamLesson::class
         );
+
+        /** 
+         * IMPORTANT: First, run this one, then comment it
+         * */
+        // $this->create();
 
         // Select database
         $this->connection->select_db ($this->name);

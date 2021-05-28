@@ -55,12 +55,11 @@ $(document).ready(function () {
      * This is the navigation item's functionality
      */
     $(".nav-item-body").hide();
-    $(".nav-item-header span").html("&rtrif;");
     $(".nav-item-header").on('click', function () {
         // Hide all nav items' bodies
         $(".nav-item-body").slideUp();
         // Change the sign also
-        $(".nav-item-header span").html("&rtrif;");
+        $(".nav-item-header i").prop("class", "fas fa-chevron-right");
         // Don't show it because it's already shown
         if ($(this).parent().hasClass("active")) {
             // Remove the active status
@@ -73,7 +72,7 @@ $(document).ready(function () {
         // Show the body of this clicked item
         $(this).parent().find(".nav-item-body").slideDown();
         // Change the sign
-        $(this).find("span").html("&dtrif;");
+        $(this).find("i").prop("class", "fas fa-chevron-down");
         // Change this nav item's status to active
         $(this).parent().addClass("active");
     });
@@ -167,6 +166,11 @@ $(document).ready(function () {
             var container = $(".list-view");
             // Retrieve result counter
             var counter = $(".result-counter");
+            // Controlling Not found banner
+            if(dataArr.length == 0)
+                $(".banner-not-found").fadeIn(400)
+            else 
+                $(".banner-not-found").fadeOut(400)
             // Remove all items
             dominoEffect ($(".list-view-item-container"), 400, 'out', 0, () => {
                 // Update result counter

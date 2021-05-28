@@ -53,15 +53,19 @@ class Template
                 <div class="col-lg-8 py-5">
                     <!-- Header -->
                     <div class="row mb-4">
-                        <div class="col-md-9">
-                            <div class="search-panel">
+                        <div class="col-md-9 d-flex flex-row align-items-end">
+                            <div class="search-panel flex-fill">
                                 <button class="button btn-search bg-grd-first m-0 p-3">ابحث</button>
                                 <input class="m-0 p-3" name="title" placeholder="...عنوان الدرس" />
                             </div>
                         </div>
                         <!-- Brand Section -->
-                        <div class="col-md-3 brand">
-                            <a href="index.php"><h1 class="text-primary font-weight-bold">أردروس</h1></a>
+                        <div class="col-md-3 brand d-flex flex-column justify-content-center align-items-center">
+                            <div class="logo flex-fill text-center">
+                                <a href="index.php">
+                                    <img src="media/logo.png" style="width: 35%" />
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <!-- Body -->

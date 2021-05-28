@@ -202,15 +202,13 @@ class SQLConverter
         $class = get_class($instance);
         $reflecter = new ReflectionClass($class);
 
-        $query = "INSERT INTO $class VALUES (";
+        $query = "INSERT INTO $class(";
+        $columns = [];
         $values = [];
 
         foreach ($reflecter->getProperties() as $property)
         {
             $annotations = SQLConverter::get_constraints($property);
-
-            if (array_key_exists("@auto", $annotations))
-                array_push ($values, "null");
 
             if (array_key_exists("@auto", $annotations) || array_key_exists("@hasMany", $annotations))
                 continue;
@@ -231,10 +229,11 @@ class SQLConverter
                 }
             }
 
+            array_push ($columns, $property->name);
             array_push ($values, "'$value'");
         }
 
-        return $query . implode(", ", $values) . ")";
+        return $query . implode(', ', $columns) . ') VALUES(' . implode(", ", $values) . ')';
     }
 
     // Delete command

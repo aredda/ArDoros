@@ -55,11 +55,17 @@ $unitModel = Translator::translate ($criteria['model']);
     <div class="col-md-12">
         <div class="row p-3 list-view content-holder">
             <div class="col-md-12 py-2">
-                <h3 class="m-0 p-0 text-second"><span class='text-primary float-left result-counter'><?php echo $units->count (); ?></span>:عدد النتائج</h3>
+                <h3 class="m-0 p-0 text-second"><span class='text-secondary float-left result-counter'><?php echo $units->count (); ?></span>:عدد النتائج</h3>
+                <div class='banner-not-found mt-4'>
+                    <h1 class="text-center display-1 text-secondary m-0 mt-3"><i class="far fa-frown"></i></h1>
+                    <p class="text-center text-secondary m-0 h4 mt-2">..عذرا، يتعذر إيجاد أي نتائج</p>
+                </div>
             </div>
             <?php 
             echo "<script>";
             echo "$(document).ready (() => {";
+            if($units->count() != 0)
+                echo "$(\".banner-not-found\").hide();";
             echo "var list_view = $('.list-view');";
             foreach ($units as $u)
                 echo "list_view.append (createListViewItem ('$u->id', '$u->title', 'lesson', '$u->image', '{$u->grade->title}', '{$u->subject->title}', '$unitModel', 'الدورة {$u->semester}'));";

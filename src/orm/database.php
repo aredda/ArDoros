@@ -35,7 +35,7 @@ abstract class Database implements ArrayAccess
                 $query = SQLConverter::get_insert($instance);
 
                 if (!SQLConverter::execute_command($query, $this->connection))
-                    throw new Exception ("Error happened while attempting to insert");
+                    throw new Exception ("InsertionException: " . $this->connection->error);
             }
 
             // Delete 

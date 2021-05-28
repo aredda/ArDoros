@@ -7,4 +7,10 @@ class Grade
      * @hasMany=Lesson
      */
     public $lessons;
+
+    /**
+     * @type=INT
+     * @references=GradeCategory
+     */
+    public $category;
 }

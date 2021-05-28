@@ -20,8 +20,11 @@ abstract class Translator
         "delete" => "حذف",
         "update" => "تعديل",
         "download" => "تحميل",
+        'icon' => "أيقونة",
         'exercisecorrection' => 'تصحيح تمرين',
-        'examcorrection' => 'تصحيح امتحان'
+        'examcorrection' => 'تصحيح امتحان',
+        'gradecategory' => 'مستوى تعليم',
+        'category' => 'مستوى التعليم'
     ];
 
     private static $plurals = [
@@ -31,7 +34,8 @@ abstract class Translator
         'exercise' => 'تمارين',
         'exam' => 'امتحانات',
         'exercisecorrection' => 'تصحيحات التمارين',
-        'examcorrection' => 'تصحيحات الامتحانات'
+        'examcorrection' => 'تصحيحات الامتحانات',
+        'gradecategory' => 'مستويات التعليم'
     ];
 
     public static function translate ($word, $toPlural = false)
