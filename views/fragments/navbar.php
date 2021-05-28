@@ -4,31 +4,25 @@ $data = $GLOBALS['db'];
 
 // Reload database EAGERLY
 $data->refresh ();
+$gradeCategories = $data[GradeCategory::class];
 
-$grades = $data[Grade::class];
-$lessons = $data[Lesson::class];
-
-foreach ($grades as $grade)
+foreach ($gradeCategories as $category)
 {
-    // Get the lessons of this grade
-    $gradeLessons = $grade->lessons;
-    // Get the subjects of this grade in which there are lessons
-    $gradeSubjects = new Table (Subject::class);
-    foreach ($gradeLessons as $lesson)
-        if ($gradeSubjects->find ($lesson->subject->id) == null)   
-            $gradeSubjects->add ($lesson->subject);        
 ?>
     <div class="nav-item">
-        <div class="nav-item-header bg-grd-second">
-            <a><?php echo $grade->title; ?></a>
-            <span>&rtrif;</span>
+        <div class="nav-item-header bg-grd-second d-flex flex-row-reverse align-items-center">
+            <i style='width: 20px' class="<?php echo $category->icon; ?> ml-2"></i>
+            <div class="flex-fill">
+                <a class='h5'><?php echo "تعليم " . $category->title; ?></a>
+            </div>
+            <i class="fas fa-chevron-right chevrolet"></i>
         </div>
         <?php
-        if ($gradeSubjects->count () > 0)
+        if ($category->grades->count () > 0)
         {
             echo "<div class='nav-item-body bg-white'>";
-            foreach ($gradeSubjects as $s)
-                echo "<a href='index.php?grade=$grade->id&subject=$s->id' class='nav-item'>$s->title</a>";
+            foreach ($category->grades as $grade)
+                echo "<a href='index.php?grade=$grade->id' class='nav-item'>$grade->title</a>";
             echo "</div>";
         }
         ?>

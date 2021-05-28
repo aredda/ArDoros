@@ -35,32 +35,64 @@ class Template
             <title><?php echo $this->title; ?></title>
             <?php include "views/fragments/dependencies.php"; ?>
         </head>
-        <body class="bg-zero">
-            <div class="container py-5">
-                <!-- Header -->
-                <div class="row mb-4">
-                    <div class="col-md-9">
-                        <div class="search-panel">
-                            <button class="button btn-search bg-grd-first m-0 p-3">ابحث</button>
-                            <input class="m-0 p-3" name="title" placeholder="...عنوان الدرس" />
+        <body class="bg-zero container-fluid">
+            <div class="row">
+                <div class="col-lg-2 banner">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- Banner -->
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-7064691516440282"
+                        data-ad-slot="2122229053"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+                <div class="col-lg-8 py-5">
+                    <!-- Header -->
+                    <div class="row mb-4">
+                        <div class="col-md-9 d-flex flex-row align-items-end">
+                            <div class="search-panel flex-fill">
+                                <button class="button btn-search bg-grd-first m-0 p-3">ابحث</button>
+                                <input class="m-0 p-3" name="title" placeholder="...عنوان الدرس" />
+                            </div>
+                        </div>
+                        <!-- Brand Section -->
+                        <div class="col-md-3 brand d-flex flex-column justify-content-center align-items-center">
+                            <div class="logo flex-fill text-center">
+                                <a href="index.php">
+                                    <img src="media/logo.png" style="width: 35%" />
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <!-- Brand Section -->
-                    <div class="col-md-3 brand">
-                        <a href="index.php"><h1 class="text-primary font-weight-bold">أردروس</h1></a>
+                    <!-- Body -->
+                    <div class="row">
+                        <!-- Content Container -->
+                        <div class="col-md-9">
+                            <!-- Include content here -->
+                            <?php include $this->content; ?>
+                        </div>
+                        <!-- Navigation Bar -->
+                        <div class="col-md-3">
+                            <?php include "views/fragments/navbar.php"; ?>
+                        </div>
                     </div>
                 </div>
-                <!-- Body -->
-                <div class="row">
-                    <!-- Content Container -->
-                    <div class="col-md-9">
-                        <!-- Include content here -->
-                        <?php include $this->content; ?>
-                    </div>
-                    <!-- Navigation Bar -->
-                    <div class="col-md-3">
-                        <?php include "views/fragments/navbar.php"; ?>
-                    </div>
+                <div class="col-lg-2 banner">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- Banner -->
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-7064691516440282"
+                        data-ad-slot="2122229053"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
                 </div>
             </div>
             <!-- Loading purposes -->

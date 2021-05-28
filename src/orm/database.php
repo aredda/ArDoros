@@ -35,7 +35,7 @@ abstract class Database implements ArrayAccess
                 $query = SQLConverter::get_insert($instance);
 
                 if (!SQLConverter::execute_command($query, $this->connection))
-                    throw new Exception ("Error happened while attempting to insert");
+                    throw new Exception ("InsertionException: " . $this->connection->error);
             }
 
             // Delete 
@@ -219,7 +219,7 @@ abstract class Database implements ArrayAccess
         return $table;
     }
 
-    // Overdefining ArrayAccess methods
+    // Defining ArrayAccess methods
     function offsetExists($offset)
     {
         return isset($this->tables[$offset]);

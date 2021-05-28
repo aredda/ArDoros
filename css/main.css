@@ -127,7 +127,7 @@ a
 .nav-item-header
 {
     color: white;
-    padding: 5px 15px;
+    padding: 8px 18px;
     font-size: large;
 }
 
@@ -340,6 +340,68 @@ a
 .nav-pagination-item:last-child
 {
     border-width: 0;
+}
+
+/* Custom Checkbox */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input[type="checkbox"]:checked + .slider {
+    background-color: var(--second);
+}
+
+input[type="checkbox"]:focus + .slider {
+    box-shadow: 0 0 1px var(--second);
+}
+
+input[type="checkbox"]:checked + .slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 8px;
+}
+
+.slider.round:before {
+    border-radius: 40%;
 }
 
 /* @media rules for a responsive layout  */
