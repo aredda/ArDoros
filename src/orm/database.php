@@ -219,7 +219,7 @@ abstract class Database implements ArrayAccess
         return $table;
     }
 
-    // Overdefining ArrayAccess methods
+    // Defining ArrayAccess methods
     function offsetExists($offset)
     {
         return isset($this->tables[$offset]);
