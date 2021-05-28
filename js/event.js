@@ -59,7 +59,7 @@ $(document).ready(function () {
         // Hide all nav items' bodies
         $(".nav-item-body").slideUp();
         // Change the sign also
-        $(".nav-item-header i").prop("class", "fas fa-chevron-right");
+        $(".nav-item-header i.chevrolet").prop("class", "fas fa-chevron-right chevrolet");
         // Don't show it because it's already shown
         if ($(this).parent().hasClass("active")) {
             // Remove the active status
@@ -72,7 +72,7 @@ $(document).ready(function () {
         // Show the body of this clicked item
         $(this).parent().find(".nav-item-body").slideDown();
         // Change the sign
-        $(this).find("i").prop("class", "fas fa-chevron-down");
+        $(this).find("i.chevrolet").prop("class", "fas fa-chevron-down chevrolet");
         // Change this nav item's status to active
         $(this).parent().addClass("active");
     });
