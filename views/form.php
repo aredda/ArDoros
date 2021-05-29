@@ -21,7 +21,12 @@ $submitId = $mode == "insert" ? "btn-insert" : "btn-update";
 <div class="row px-3">
     <!-- Main Information -->
     <div class="col-md-12 content-holder p-4">
-        <h2 class='m-0 mb-4 text-center text-second'><?php echo Translator::translate($mode) . " " . Translator::translate($model); ?></h2>
+        <div class="mb-4 d-flex align-content-center">
+            <a href="manage.php?model=<?php echo $model; ?>" class="h2 text-secondary">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <h2 class='m-0 flex-fill text-second'><?php echo Translator::translate($mode) . " <b>" . Translator::translate($model) . "</b>"; ?></h2>
+        </div>
         <form id="form" method='post' enctype="multipart/form-data">
         <table class="w-100">
 <?php
