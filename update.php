@@ -5,4 +5,4 @@ include "templates/adminTemplate.php";
 $_GET["mode"] = "update";
 $_GET['model'] = ucfirst ($_GET['model']);
 
-AdminTemplate::useTemplate("اضافة", "views/form.php");
+AdminTemplate::useTemplate("تعديل", "views/form.php");

@@ -46,16 +46,18 @@ class AdminTemplate
             ?>
             <div class="container py-5">
                 <!-- Header -->
-                <div class="row mb-4">
+                <div class="row mb-4 align-items-center">
                     <div class="col-md-3">
                         <a href='menu.php'>
-                            <h1 class='half-scaled m-0 text-left text-second'><i class="fal fa-solar-panel"></i> لوحة التحكم</h1>
+                            <h1 class='half-scaled m-0 text-left text-second'>لوحة التحكم<i class="fal fa-solar-panel ml-3"></i></h1>
                         </a>
                     </div>
-                    <div class="col-md-3 offset-md-6">
-                        <a href="index.php">
-                            <h1 class="text-primary font-weight-bold">أردروس</h1>
-                        </a>
+                    <div class="col-md-3 offset-6 brand d-flex flex-column justify-content-center align-items-center">
+                        <div class="logo flex-fill text-center">
+                            <a href="index.php">
+                                <img src="media/logo.png" style="width: 35%" />
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <!-- Body -->

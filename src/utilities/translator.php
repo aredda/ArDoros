@@ -16,7 +16,7 @@ abstract class Translator
         "year" => "سنة",
         "type" => "نوع",
         "model" => "نوع",
-        "insert" => "اضافة",
+        "insert" => "إضافة",
         "delete" => "حذف",
         "update" => "تعديل",
         "download" => "تحميل",

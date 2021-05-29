@@ -10,7 +10,7 @@
     <!-- Main Information -->
     <div class="col-md-12 content-holder p-4">
         <h2 class='m-0 mb-4 text-right text-primary'>
-            <a href="insert.php?model=<?php echo $model; ?>" class='btn btn-lg bg-grd-second text-white float-left px-4 shadow-sm'>اضافة <?php echo Translator::translate ($model);?><i class="fas fa-plus-circle ml-2"></i></a>
+            <a href="insert.php?model=<?php echo $model; ?>" class='btn btn-lg bg-grd-second text-white float-left px-4 shadow-sm'>إضافة <?php echo Translator::translate ($model);?><i class="fas fa-plus-circle ml-2"></i></a>
             <a><?php echo "جدول <b>ال" . Translator::translate($model, true) . "</b>"; ?></a>
         </h2>
         <table class='table table-striped border m-0 w-100'>

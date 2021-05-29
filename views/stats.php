@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="col-md-12">
-        <h1 class='text-center m-0 mb-3 text-primary'>احصائيات</h1>
+    <div class="col-md-12 mb-1">
+        <h1 class='text-center m-0 mb-3 text-primary'>قاعدة البيانات<i class="fas fa-server ml-3"></i></h1>
     </div>
 <?php
 foreach ($GLOBALS['db']->tables as $table)

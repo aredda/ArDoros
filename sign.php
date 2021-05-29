@@ -31,7 +31,11 @@
         }
     ?>
     <div class="centralized content-holder p-5 shadow-lg mx-auto">
-        <h1 class='text-center text-primary mb-5'><a href='index.php'>أردروس</a></h1>
+        <div class="text-center pb-4">
+            <a href='index.php'>
+                <img src="media/logo.png" class="w-25" />
+            </a>
+        </div>
         <form method='post'>
             <div class="form-group">
                 <input name='admin' placeholder='اسم الأدمين' type="text" class="form-control input-tall" />
