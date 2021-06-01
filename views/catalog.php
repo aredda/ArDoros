@@ -1,7 +1,7 @@
 <?php
 
 $filterPanel = array_reverse ([
-    "grade" => null,
+    "grade" => ['-'],
     "subject" => null,
     "semester" => [1, 2],
     "model" => [Lesson::class, Exercise::class, Exam::class]
