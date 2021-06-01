@@ -62,7 +62,7 @@ function updateCatalog(data)
         // Retrieve result counter
         let counter = $(".result-counter");
         // Remove all items
-        dominoEffect ($(".list-view-item-container"), 50, 'out', 0, () => {
+        dominoEffect ($(".list-view-item-container"), 10, 'out', 0, () => {
             // Update result counter
             counter.html (dataArr.length);
             // Continuation
@@ -107,7 +107,7 @@ function updateCatalog(data)
                     container.append (itemView);
                 }
                 // Show results
-                dominoEffect ($(".list-view-item-container"), 50, 'in', 0);
+                dominoEffect ($(".list-view-item-container"), 10, 'in', 0);
             };
             // If there's no data, then show banner
             if(dataArr.length == 0)
@@ -287,9 +287,15 @@ $(document).ready(function () {
         data.append('category', $(this).val());
         // Fill with new data
         ajaxRequest('src/medium.php', data, function (response){
-            response.success.array.forEach(function (element){
-               $('#cb-grade').append(`<option value=${element.id}>${element.title}</option>`);
-            });
+            // Retrieve data array
+            let dt = response.success.array;
+            // Fill grade combo
+            if(dt.length == 0)
+                $('#cb-grade').append(`<option>-</option>`);
+            else
+                dt.forEach(function (element){
+                   $('#cb-grade').append(`<option value=${element.id}>${element.title}</option>`);
+                });
         });
     });
 

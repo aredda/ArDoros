@@ -36,6 +36,8 @@ $unitModel = Translator::translate ($criteria['model']);
                 echo "</div>";
             echo "</div>";
             echo "<select id='cb-$label' class='w-100 p-2 filter-switch' name=$label>";
+                if(count($items) == 0)
+                    echo "<option>-</option>";
                 foreach ($items as $item)
                 {
                     if (is_a ($item, ucfirst($label)))
