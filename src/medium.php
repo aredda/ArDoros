@@ -82,7 +82,7 @@ if (count ($_POST) > 0)
             if(isset($_POST['paginate']))
             {
                 $page = $_POST['page'] ?? 1;
-                $per_page = $_POST['per_page'] ?? 12;
+                $per_page = $_POST['per_page'] ?? Paginator::MAX_PER_PAGE;
                 $response = new Paginator($response, $page, $per_page);
             }
         }

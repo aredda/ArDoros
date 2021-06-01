@@ -2,6 +2,8 @@
 
 class Paginator
 {
+    public const MAX_PER_PAGE = 6;
+
     private $table;
 
     public $class;
