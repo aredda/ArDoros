@@ -30,7 +30,7 @@ abstract class Database implements ArrayAccess
         foreach ($this->tables as $table)
         {
             // Insert what's in the insert queue
-            foreach ($table->insertQueue as $instance)
+            foreach ($table->getInsertQueue() as $instance)
             {
                 $query = SQLConverter::get_insert($instance);
 
@@ -39,7 +39,7 @@ abstract class Database implements ArrayAccess
             }
 
             // Delete 
-            foreach ($table->deleteQueue as $instance)
+            foreach ($table->getDeleteQueue() as $instance)
             {
                 $query = SQLConverter::get_delete($instance);
 
@@ -48,7 +48,7 @@ abstract class Database implements ArrayAccess
             }
 
             // Update
-            foreach ($table->updateQueue as $instance)
+            foreach ($table->getUpdateQueue() as $instance)
             {
                 $query = SQLConverter::get_update($instance);
 

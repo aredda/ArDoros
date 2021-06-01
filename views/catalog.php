@@ -70,17 +70,21 @@ $unitModel = Translator::translate ($criteria['model']);
                     <p class="text-center text-secondary m-0 h4 mt-2">..عذرا، يتعذر إيجاد أي نتائج</p>
                 </div>
             </div>
-            <?php 
-            echo "<script>";
-            echo "$(document).ready (() => {";
-            if($units->count() != 0)
-                echo "$(\".banner-not-found\").hide();";
-            echo "var list_view = $('.list-view');";
-            foreach ($units as $u)
-                echo "list_view.append (createListViewItem ('$u->id', '$u->title', 'lesson', '$u->image', '{$u->grade->title}', '{$u->subject->title}', '$unitModel', 'الدورة {$u->semester}'));";
-            echo "})";
-            echo "</script>";
-            ?>
+            <div class="col-md-12 py-2">
+                <nav>
+                    <ul class="pagination text-secondary justify-content-center">
+                        <li class="page-item text-first page-prev">
+                            <a class="page-link">السابق</a>
+                        </li>
+                        <li class="page-item page-number active" data-page=1><a class="page-link">1</a></li>
+                        <li class="page-item page-number" data-page=2><a class="page-link">2</a></li>
+                        <li class="page-item page-number" data-page=3><a class="page-link">3</a></li>
+                        <li class="page-item text-first page-next">
+                            <a class="page-link">التالي</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 </div>

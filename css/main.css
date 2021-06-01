@@ -1,3 +1,4 @@
+
 :root
 {
     --zero: #f0f6fa;
@@ -415,4 +416,9 @@ input[type="checkbox"]:checked + .slider:before {
     {
         text-align: center !important;
     }
+}
+
+.pagination .page-item
+{
+    cursor: pointer;
 }

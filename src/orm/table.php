@@ -5,7 +5,7 @@ class Table extends ArrayList
     public $class;
 
     // Queues
-    public $insertQueue, $deleteQueue, $updateQueue;
+    private $insertQueue, $deleteQueue, $updateQueue;
 
     function __construct($class)
     {
@@ -109,6 +109,30 @@ class Table extends ArrayList
             array_push($result, $row->$column);
 
         return $result;
+    }
+
+    /**
+     * @return array
+     */
+    public function getInsertQueue()
+    {
+        return $this->insertQueue;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDeleteQueue()
+    {
+        return $this->deleteQueue;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUpdateQueue()
+    {
+        return $this->updateQueue;
     }
 
     /**

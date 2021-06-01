@@ -4,6 +4,7 @@ include "utilities/loader.php";
 include "utilities/uploader.php";
 include "utilities/handler.php";
 include "utilities/translator.php";
+include "utilities/paginator.php";
 
 /**
  * Remove any signs of recursive connections
@@ -58,7 +59,7 @@ function removeRecursion (Table $a)
 /**
  * Tweak some values before sending the data
  */
-function tweak (Table $table)
+function purify (Table $table)
 {
     $table->class = Translator::translate ($table->class);
 
@@ -72,10 +73,20 @@ if (count ($_POST) > 0)
     {
         $response = RequestHandler::handle ($_POST, $_FILES);
     
-        // If the returned response is a Table instance, then purify it from recursion
+        // If the returned response is a Table instance
         if (is_a($response, Table::class))
-            $response = tweak ($response);
-    
+        {
+            // Then purify it from recursion
+            $response = purify ($response);
+            // And apply pagination if requested
+            if(isset($_POST['paginate']))
+            {
+                $page = $_POST['page'] ?? 1;
+                $per_page = $_POST['per_page'] ?? 12;
+                $response = new Paginator($response, $page, $per_page);
+            }
+        }
+
         echo json_encode (['success' => $response], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
     catch (Exception $e)

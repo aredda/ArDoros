@@ -56,7 +56,9 @@ function updateCatalog(data)
 {
     ajaxRequest ('src/medium.php', data, (response) => {
         // Extract data
-        let dataArr = response.success.array;
+        let dataArr = response.success.data;
+        // Update paginator
+        updatePaginator(response.success);
         // Retrieve container
         let container = $(".list-view");
         // Retrieve result counter
@@ -64,7 +66,7 @@ function updateCatalog(data)
         // Remove all items
         dominoEffect ($(".list-view-item-container"), 10, 'out', 0, () => {
             // Update result counter
-            counter.html (dataArr.length);
+            counter.html (response.success.total_count);
             // Continuation
             let onComplete = function (){
                 // Display data
@@ -111,16 +113,73 @@ function updateCatalog(data)
             };
             // If there's no data, then show banner
             if(dataArr.length == 0)
+            {
+                $('.pagination').hide();
                 $(".banner-not-found").fadeIn(400, onComplete);
+            }
             else
-                $(".banner-not-found").fadeOut(400, onComplete);
+            {
+                $(".banner-not-found").fadeOut(400, function (){
+                    $('.pagination').show();
+                    onComplete();
+                });
+            }
         });
     }, 'post', 'json', function (a, b, c){
         popNotification ('error', c, 'error');
     });
 }
 
+/**
+ * A method to facilitate the refresh of paginator
+ */
+function updatePaginator(meta)
+{
+    // Remove current pagination links
+    $('.pagination .page-number').remove();
+    // Create new pagination links
+    for (let i=0; i < meta.total_pages; i++)
+    {
+        // Create link
+        let page_link = $(`<li class="page-item page-number" data-page=${i+1}><a class="page-link">${i+1}</a></li>`);
+        // Set as active if
+        if(meta.page == i + 1)
+            page_link.addClass('active');
+        // Insert link
+        $('.pagination').append(page_link);
+    }
+    // Move the next button to the end
+    $('.pagination').append($('.page-next'));
+    // Disable next & prev buttons
+    $('.page-prev, .page-next').removeClass('disabled')
+    if(meta.page == 1)
+        $('.page-prev').addClass('disabled')
+    if(meta.page == meta.total_pages)
+        $('.page-next').addClass('disabled')
+}
+
 $(document).ready(function () {
+
+    /**
+     * Required for pagination
+     */
+    let current_request = {
+        params: null
+    };
+
+    /**
+     * OnStart
+     */
+    $('.banner-not-found').hide();
+    // Configure onStart query
+    let data = new FormData();
+    data.append('model', 'Lesson');
+    data.append('type', 'search');
+    data.append('paginate', 'true');
+    // Save current request params
+    current_request = { params: data };
+    // Update view
+    updateCatalog(data);
 
     /**
      * Filter Panel Setup
@@ -136,6 +195,7 @@ $(document).ready(function () {
         select.change(function (){
             let data = new FormData();
             data.append('type', 'search');
+            data.append('paginate', 'true');
             // Loop through checkboxes and retrieve data if they are
             $('.switch input').each(function (index){
                 if(this.checked)
@@ -149,6 +209,8 @@ $(document).ready(function () {
             // If there's no model then add a default
             if(!data.has('model'))
                 data.append('model', 'Lesson');
+            // Save current request params
+            current_request.params = data;
             // Send filter request & update view
             updateCatalog(data);
         });
@@ -258,9 +320,12 @@ $(document).ready(function () {
         let data = new FormData ();
         // Specify the type of the request
         data.append ('type', 'search');
+        data.append ('paginate', 'true');
         // Gather the values of those keys
         for (let key of keys)
             data.append (key, $(`*[name=${key}]`).val ());
+        // Save current request params
+        current_request.params = data;
         // Send a SEARCH request
         updateCatalog(data);
     });
@@ -297,6 +362,48 @@ $(document).ready(function () {
                    $('#cb-grade').append(`<option value=${element.id}>${element.title}</option>`);
                 });
         });
+    });
+
+    /**
+     * Pagination Controls
+     */
+    $(document).on('click', '.pagination .page-number:not(.active)', function (){
+        // Remove active state from all siblings
+        $('.pagination .page-number').removeClass('active');
+        // Add active state to this item
+        $(this).addClass('active');
+        // Get page number
+        let page = $(this).attr('data-page');
+        // Update the current request params
+        current_request.params.set('page', page);
+        // Update catalog
+        updateCatalog(current_request.params);
+    });
+    // Next button
+    $(document).on('click', '.pagination .page-next:not(.disabled)', function (){
+        // Retrieve active, and next links
+        let active_link = $('.pagination .page-number.active');
+        let next_link = active_link.next();
+        // Update active state
+        active_link.removeClass('active');
+        next_link.addClass('active');
+        // Update the current request params
+        current_request.params.set('page', parseInt(active_link.attr('data-page')) + 1);
+        // Update catalog
+        updateCatalog(current_request.params);
+    });
+    // Previous button
+    $(document).on('click', '.pagination .page-prev:not(.disabled)', function (){
+        // Retrieve active, and next links
+        let active_link = $('.pagination .page-number.active');
+        let prev_link = active_link.prev();
+        // Update active state
+        active_link.removeClass('active');
+        prev_link.addClass('active');
+        // Update the current request params
+        current_request.params.set('page', parseInt(active_link.attr('data-page')) - 1);
+        // Update catalog
+        updateCatalog(current_request.params);
     });
 
 });
