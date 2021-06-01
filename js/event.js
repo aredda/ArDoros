@@ -62,7 +62,7 @@ function updateCatalog(data)
         // Retrieve result counter
         let counter = $(".result-counter");
         // Remove all items
-        dominoEffect ($(".list-view-item-container"), 200, 'out', 0, () => {
+        dominoEffect ($(".list-view-item-container"), 50, 'out', 0, () => {
             // Update result counter
             counter.html (dataArr.length);
             // Continuation
@@ -107,7 +107,7 @@ function updateCatalog(data)
                     container.append (itemView);
                 }
                 // Show results
-                dominoEffect ($(".list-view-item-container"), 200, 'in', 0);
+                dominoEffect ($(".list-view-item-container"), 50, 'in', 0);
             };
             // If there's no data, then show banner
             if(dataArr.length == 0)

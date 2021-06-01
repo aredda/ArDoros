@@ -100,6 +100,17 @@ class Table extends ArrayList
         return $this->array[$index];
     }
 
+    // Get an array containing only the value of one column of each record
+    public function select($column)
+    {
+        $result = [];
+
+        foreach ($this as $row)
+            array_push($result, $row->$column);
+
+        return $result;
+    }
+
     /**
      * @return array
      * The array list of records
