@@ -23,30 +23,37 @@ $unitModel = Translator::translate ($criteria['model']);
     foreach ($filterPanel as $label => $values)
     {
         $items = is_null($values) ? $GLOBALS['db'][ucfirst($label)] : $values;
-
-        echo "<div class='col-md-3 p-1'>";
-        echo "<div class='d-flex flex-row'>";
-        echo "<div class='flex-fill text-left'>";
-        echo "<label class='switch'>";
-        echo "<input type='checkbox' checked>";
-        echo "<span class='slider round'></span>";
-        echo "</label>";
-        echo "</div>";
-        echo "<div class='label flex-fill'>";
-        echo "<h6 class='text-first font-weight-bold'>" . Translator::translate($label) . "</h6>";
-        echo "</div>";
-        echo "</div>";
-        echo "<select class='w-100 p-2 filter-switch' name=$label>";
-        foreach ($items as $item)
-        {
-            if (is_a ($item, ucfirst($label)))
-                echo "<option value=$item->id>$item->title</option>";
-            else
-                echo "<option value=$item>" . Translator::translate($item) . "</option>";
-        }
-        echo "</select>";
+        echo "<div class='col-md p-1'>";
+            echo "<div class='d-flex flex-row'>";
+                echo "<div class='flex-fill text-left'>";
+                    echo "<label class='switch'>";
+                        echo "<input type='checkbox' checked>";
+                        echo "<span class='slider round'></span>";
+                    echo "</label>";
+                echo "</div>";
+                echo "<div class='label flex-fill'>";
+                    echo "<h6 class='text-first font-weight-bold'>" . Translator::translate($label) . "</h6>";
+                echo "</div>";
+            echo "</div>";
+            echo "<select id='cb-$label' class='w-100 p-2 filter-switch' name=$label>";
+                foreach ($items as $item)
+                {
+                    if (is_a ($item, ucfirst($label)))
+                        echo "<option value=$item->id>$item->title</option>";
+                    else
+                        echo "<option value=$item>" . Translator::translate($item) . "</option>";
+                }
+            echo "</select>";
         echo "</div>";
     }
+    // GradeCategory ComboBox
+    echo "<div class='col-md p-1'>";
+        echo "<h6 class='text-first font-weight-bold'>" . Translator::translate('gradecategory') . "</h6>";
+        echo "<select id='cb-grade-category' class='w-100 p-2 filter-switch'>";
+        foreach ($GLOBALS['db'][GradeCategory::class] as $gc)
+            echo "<option value=$gc->id>$gc->title</option>";
+        echo "</select>";
+    echo "</div>";
     ?>
 </div>
 

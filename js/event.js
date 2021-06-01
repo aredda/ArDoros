@@ -274,4 +274,23 @@ $(document).ready(function () {
         html_h6.toggleClass("text-first text-secondary")
     });
 
+    /**
+     * GradeCategory Select
+     */
+    $('#cb-grade-category').change(function (){
+        // Clear targeted combo
+        $('#cb-grade').empty();
+        // Query
+        let data = new FormData();
+        data.append('type', 'search');
+        data.append('model', 'Grade');
+        data.append('category', $(this).val());
+        // Fill with new data
+        ajaxRequest('src/medium.php', data, function (response){
+            response.success.array.forEach(function (element){
+               $('#cb-grade').append(`<option value=${element.id}>${element.title}</option>`);
+            });
+        });
+    });
+
 });
