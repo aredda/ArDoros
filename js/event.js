@@ -164,8 +164,18 @@ $(document).ready(function () {
      * Required for pagination
      */
     let current_request = {
-        params: null
+        params: new FormData()
     };
+    current_request.params.append('model', 'Lesson');
+    current_request.params.append('type', 'search');
+    current_request.params.append('paginate', 'true');
+
+    /**
+     * Initial load
+     */
+    $('.list-view').ready(function (){
+        updateCatalog(current_request.params);
+    });
 
     /**
      * Filter Panel Setup

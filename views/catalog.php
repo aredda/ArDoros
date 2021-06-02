@@ -92,7 +92,18 @@ $unitModel = Translator::translate ($criteria['model']);
                     </ul>
                 </nav>
             </div>
-            <script src="js/on_load.js"></script>
+            <?php
+                if($units->count() != 0)
+                {
+            ?>
+                    <script>
+                        $(document).ready(function (){
+                            $('.banner-not-found').hide();
+                        });
+                    </script>
+            <?php
+                }
+            ?>
         </div>
     </div>
 </div>
