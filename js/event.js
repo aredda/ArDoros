@@ -174,13 +174,7 @@ $(document).ready(function () {
      * Initial load
      */
     $('.list-view').ready(function (){
-        let refreshInterval = setInterval(function (){
-            if($('.list-view-item-container').length == 0)
-                updateCatalog(current_request.params);
-            else
-                clearInterval(refreshInterval);
-        }, 100);
-
+        updateCatalog(current_request.params);
     });
 
     /**
