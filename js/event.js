@@ -174,7 +174,13 @@ $(document).ready(function () {
      * Initial load
      */
     $('.list-view').ready(function (){
-        updateCatalog(current_request.params);
+        let refreshInterval = setInterval(function (){
+            if($('.list-view-item-container').length == 0)
+                updateCatalog(current_request.params);
+            else
+                clearInterval(refreshInterval);
+        }, 100);
+
     });
 
     /**
