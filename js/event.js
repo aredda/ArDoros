@@ -168,20 +168,6 @@ $(document).ready(function () {
     };
 
     /**
-     * OnStart
-     */
-    $('.banner-not-found').hide();
-    // Configure onStart query
-    let data = new FormData();
-    data.append('model', 'Lesson');
-    data.append('type', 'search');
-    data.append('paginate', 'true');
-    // Save current request params
-    current_request = { params: data };
-    // Update view
-    updateCatalog(data);
-
-    /**
      * Filter Panel Setup
      */
     let filter_switches = []
