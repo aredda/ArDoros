@@ -172,6 +172,8 @@ $(document).ready(function () {
     current_request.params.append('model', 'Lesson');
     current_request.params.append('type', 'search');
     current_request.params.append('paginate', 'true');
+    for(let key in getUrlParams())
+        current_request.params.append(key, getUrlParams()[key]);
 
     /**
      * Initial load
@@ -409,6 +411,9 @@ $(document).ready(function () {
         // Determine clicked and the other
         let target = $(this);
         let other = target.hasClass('page-list-view') ? $('.page-card-view') : $('.page-list-view');
+        // Optimize
+        if(target.hasClass('active'))
+            return;
         // Change active state
         other.removeClass('active');
         target.addClass('active');
