@@ -52,7 +52,7 @@ function getUrlParams ()
 /**
  * A method to facilitate refreshing catalog items view
  */
-function updateCatalog(data)
+function updateCatalog(data, isCardView = true)
 {
     ajaxRequest ('src/medium.php', data, (response) => {
         // Extract data
@@ -92,7 +92,7 @@ function updateCatalog(data)
                             break;
                     }
                     // Instantiate an item view
-                    let itemView = createListViewItem (
+                    let itemView = createCardViewItem (
                         id,
                         title,
                         data.get('model'),
@@ -103,6 +103,8 @@ function updateCatalog(data)
                         response.success.class,
                         year
                     );
+                    if (!isCardView)
+                        itemView = createListViewItem(item, data.get('model'))
                     // hide it
                     itemView.css ({'display': 'none'});
                     // append it
@@ -163,6 +165,7 @@ $(document).ready(function () {
     /**
      * Required for pagination
      */
+    let card_view = true;
     let current_request = {
         params: new FormData()
     };
@@ -174,7 +177,7 @@ $(document).ready(function () {
      * Initial load
      */
     $('.list-view').ready(function (){
-        updateCatalog(current_request.params);
+        updateCatalog(current_request.params, card_view);
     });
 
     /**
@@ -208,7 +211,7 @@ $(document).ready(function () {
             // Save current request params
             current_request.params = data;
             // Send filter request & update view
-            updateCatalog(data);
+            updateCatalog(data, card_view);
         });
     }
 
@@ -323,7 +326,7 @@ $(document).ready(function () {
         // Save current request params
         current_request.params = data;
         // Send a SEARCH request
-        updateCatalog(data);
+        updateCatalog(data, card_view);
     });
 
     // Filter Panel Checkbox Effect
@@ -373,7 +376,7 @@ $(document).ready(function () {
         // Update the current request params
         current_request.params.set('page', page);
         // Update catalog
-        updateCatalog(current_request.params);
+        updateCatalog(current_request.params, card_view);
     });
     // Next button
     $(document).on('click', '.pagination .page-next:not(.disabled)', function (){
@@ -386,7 +389,7 @@ $(document).ready(function () {
         // Update the current request params
         current_request.params.set('page', parseInt(active_link.attr('data-page')) + 1);
         // Update catalog
-        updateCatalog(current_request.params);
+        updateCatalog(current_request.params, card_view);
     });
     // Previous button
     $(document).on('click', '.pagination .page-prev:not(.disabled)', function (){
@@ -399,7 +402,20 @@ $(document).ready(function () {
         // Update the current request params
         current_request.params.set('page', parseInt(active_link.attr('data-page')) - 1);
         // Update catalog
-        updateCatalog(current_request.params);
+        updateCatalog(current_request.params, card_view);
+    });
+    // Card view button
+    $('.page-list-view, .page-card-view').click(function (){
+        // Determine clicked and the other
+        let target = $(this);
+        let other = target.hasClass('page-list-view') ? $('.page-card-view') : $('.page-list-view');
+        // Change active state
+        other.removeClass('active');
+        target.addClass('active');
+        // Change switch
+        card_view = target.hasClass("page-card-view");
+        // Update catalog
+        updateCatalog(current_request.params, card_view);
     });
 
 });
