@@ -194,7 +194,7 @@ $(document).ready(function () {
     for (let select of filter_switches)
     {
         select.change(function (){
-            // If this is grade cb, change breadcrumn
+            // If this is grade cb, change breadcrumb
             if(select.attr('id') == 'cb-grade')
                 $('.a-grade-title').html($('#cb-grade option:selected').text())
             // Prepare query params

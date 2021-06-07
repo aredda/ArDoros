@@ -51,7 +51,7 @@ $unitModel = Translator::translate ($criteria['model']);
     $grade_category_id = $_GET['grade_category'] ?? -1;
     $category = $GLOBALS['db'][GradeCategory::class]->find($grade_category_id);
     $grades = $GLOBALS['db'][Grade::class];
-    $grade_id = $_GET['grade_category'] ?? -1;
+    $grade_id = $_GET['grade'] ?? -1;
     $current_grade = $grades->find($grade_id);
     echo "<div class='col-md p-1'>";
     echo "<div class='d-flex flex-row'>";
@@ -73,7 +73,7 @@ $unitModel = Translator::translate ($criteria['model']);
     else
     {
         foreach ($grades as $grade)
-            if($grade->category->id == $grade_category_id)
+            if($grade_category_id == -1 || $grade->category->id == $grade_category_id)
             {
                 $opening_tag = $grade_id == $grade->id ? '<option selected' : '<option';
                 echo "$opening_tag value=$grade->id>$grade->title</option>";
