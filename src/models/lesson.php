@@ -4,10 +4,6 @@ class Lesson
     extends PathModel
 {
     /**
-     * @type=TEXT
-     */
-    public $image;   
-    /**
      * @type=INT 
      */   
     public $semester;
