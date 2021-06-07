@@ -30,8 +30,8 @@ abstract class RequestHandler
     {
         // Remove related documents
         $files = [$record->path];
-        // If the record is a Lesson, add the image too
-        if (is_a ($record, Lesson::class))
+        // If the record is a Subject, add the image too
+        if (is_a ($record, Subject::class))
             $files[] = $record->image;
         // Remove files
         Uploader::delete ($files);

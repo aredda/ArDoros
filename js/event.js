@@ -80,7 +80,8 @@ function updateCatalog(data, isCardView = true)
                     switch (response.success.class)
                     {
                         case 'درس':
-                            ({ image, semester, grade, subject } = item);
+                            ({ semester, grade, subject } = item);
+                            image = item.subject.image;
                             break;
 
                         case 'تمرين':

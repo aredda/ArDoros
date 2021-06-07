@@ -8,6 +8,10 @@ class Subject
      */
     public $icon;
     /**
+     * @type=TEXT
+     */
+    public $image;
+    /**
      * @hasMany=Lesson
      */
     public $lessons;
