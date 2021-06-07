@@ -22,7 +22,7 @@ foreach ($gradeCategories as $category)
         {
             echo "<div class='nav-item-body bg-white'>";
             foreach ($category->grades as $grade)
-                echo "<a href='index.php?grade=$grade->id' class='nav-item'>$grade->title</a>";
+                echo "<a href='index.php?grade_category=$category->id&grade=$grade->id' class='nav-item'>$grade->title</a>";
             echo "</div>";
         }
         ?>
