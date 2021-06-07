@@ -1,7 +1,6 @@
 <?php
 
 $filterPanel = array_reverse ([
-    "grade" => ['-'],
     "subject" => null,
     "semester" => [1, 2],
     "model" => [Lesson::class, Exercise::class, Exam::class]
@@ -48,19 +47,56 @@ $unitModel = Translator::translate ($criteria['model']);
             echo "</select>";
         echo "</div>";
     }
-    // GradeCategory ComboBox
+    // Grade Combo
+    $grade_category_id = $_GET['grade_category'] ?? -1;
+    $category = $GLOBALS['db'][GradeCategory::class]->find($grade_category_id);
+    $grades = $GLOBALS['db'][Grade::class];
+    $grade_id = $_GET['grade_category'] ?? -1;
+    $current_grade = $grades->find($grade_id);
     echo "<div class='col-md p-1'>";
-        echo "<h6 class='text-first font-weight-bold'>" . Translator::translate('gradecategory') . "</h6>";
-        echo "<select id='cb-grade-category' class='w-100 p-2 filter-switch'>";
-        foreach ($GLOBALS['db'][GradeCategory::class] as $gc)
-            echo "<option value=$gc->id>$gc->title</option>";
-        echo "</select>";
+    echo "<div class='d-flex flex-row'>";
+    echo "<div class='flex-fill text-left'>";
+    echo "<label class='switch'>";
+    echo "<input type='checkbox' checked>";
+    echo "<span class='slider round'></span>";
+    echo "</label>";
+    echo "</div>";
+    echo "<div class='label flex-fill'>";
+    echo "<h6 class='text-first font-weight-bold'>" . Translator::translate('grade') . "</h6>";
+    echo "</div>";
+    echo "</div>";
+    echo "<select id='cb-grade' class='w-100 p-2 filter-switch' name='grade'>";
+    if($grades->count() == 0)
+    {
+        echo "<option>-</option>";
+    }
+    else
+    {
+        foreach ($grades as $grade)
+            if($grade->category->id == $grade_category_id)
+            {
+                $opening_tag = $grade_id == $grade->id ? '<option selected' : '<option';
+                echo "$opening_tag value=$grade->id>$grade->title</option>";
+            }
+    }
+    echo "</select>";
     echo "</div>";
     ?>
 </div>
 
 <!-- Result List Item -->
 <div class="row px-3 py-4">
+    <!-- Breadcrumb -->
+    <?php if($category != null) { ?>
+    <div class="col-md-12 bg-grd-first py-3 text-center m-0 mb-2 h6 text-white rounded-lg">
+        <a><?php echo 'التعليم ال' . $category->title; ?></a>
+        <?php if($current_grade != null) { ?>
+        <i class="fas fa-angle-double-left mx-2"></i>
+        <a class='a-grade-title'><?php echo $current_grade->title; ?></a>
+        <?php } ?>
+        <i class='ml-1 <?php echo $category->icon; ?>'></i>
+    </div>
+    <?php } ?>
     <div class="col-md-12">
         <div class="row p-3 list-view content-holder">
             <div class="col-md-12 py-2">

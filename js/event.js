@@ -194,6 +194,10 @@ $(document).ready(function () {
     for (let select of filter_switches)
     {
         select.change(function (){
+            // If this is grade cb, change breadcrumn
+            if(select.attr('id') == 'cb-grade')
+                $('.a-grade-title').html($('#cb-grade option:selected').text())
+            // Prepare query params
             let data = new FormData();
             data.append('type', 'search');
             data.append('paginate', 'true');
@@ -338,31 +342,6 @@ $(document).ready(function () {
 
         html_select.prop("disabled", !this.checked)
         html_h6.toggleClass("text-first text-secondary")
-    });
-
-    /**
-     * GradeCategory Select
-     */
-    $('#cb-grade-category').change(function (){
-        // Clear targeted combo
-        $('#cb-grade').empty();
-        // Query
-        let data = new FormData();
-        data.append('type', 'search');
-        data.append('model', 'Grade');
-        data.append('category', $(this).val());
-        // Fill with new data
-        ajaxRequest('src/medium.php', data, function (response){
-            // Retrieve data array
-            let dt = response.success.array;
-            // Fill grade combo
-            if(dt.length == 0)
-                $('#cb-grade').append(`<option>-</option>`);
-            else
-                dt.forEach(function (element){
-                   $('#cb-grade').append(`<option value=${element.id}>${element.title}</option>`);
-                });
-        });
     });
 
     /**
