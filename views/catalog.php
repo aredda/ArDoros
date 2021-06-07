@@ -104,22 +104,6 @@ $unitModel = Translator::translate ($criteria['model']);
             <?php
                 }
             ?>
-
-            <div class="col-md-12 list-view-item-container pb-3">
-                <a href="#link">
-                    <div class='list-view-item bg-zero px-4 py-3 d-flex flex-row flex-row-reverse align-items-center rounded border shadow-sm'>
-                        <i class="fas fa-icons h2 m-0 ml-4 text-dark"></i>
-                        <div class='d-flex flex-column'>
-                            <h4 class='text-first m-0 font-weight-bold mb-2'>data.title</h4>
-                            <div class='h6 m-0'>
-                                <span class="badge text-white py-1 px-2 bg-grd-second">grade</span>
-                                <span class="badge text-white py-1 px-2 bg-grd-second">subject</span>
-                                <span class="badge text-white py-1 px-2 bg-grd-second">semester</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
         </div>
     </div>
 </div>
