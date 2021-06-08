@@ -138,13 +138,21 @@ abstract class RequestHandler
 
                         $filterMethod = function ($iterator, array $criteria)
                         {
+                            // Retrieve lesson
                             $lesson = $iterator->lesson;
+                            // Condition collection
+                            $conditionMet = true;
                             // Search for the exercises of that lesson whose title is similar to the one provided in criteria
-                            $titleCheck = empty ($criteria['title']) ? true : strpos ($lesson->title, $criteria['title']) !== false;
-
-                            return $titleCheck  && ($lesson->grade->id == $criteria['grade'] 
-                                                && $lesson->subject->id == $criteria['subject']
-                                                && $lesson->semester == $criteria['semester']);
+                            if(isset($criteria['title']))
+                                $conditionMet &= strpos ($lesson->title, $criteria['title']) !== false;
+                            if(isset($criteria['grade']))
+                                $conditionMet &= $lesson->grade->id == $criteria['grade'];
+                            if(isset($criteria['subject']))
+                                $conditionMet &= $lesson->subject->id == $criteria['subject'];
+                            if(isset($criteria['semester']))
+                                $conditionMet &= $lesson->semester == $criteria['semester'];
+                            // Return the result of conditions
+                            return $conditionMet;
                         };
 
                     break;
