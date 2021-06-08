@@ -86,6 +86,7 @@ function updateCatalog(data, isCardView = true)
 
                         case 'تمرين':
                             ({ grade, subject, semester } = item.lesson);
+                            image = item.lesson.subject.image;
                             break;
 
                         case 'امتحان':
